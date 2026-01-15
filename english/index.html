@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Police Exam Master: ติวสอบนายสิบตำรวจ</title>
+    <title>Police Exam Master: ติวสอบนายสิบตำรวจ (Ultimate)</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,6 +16,8 @@
             --bg: #e9ecef;
             --card-bg: #ffffff;
             --purple: #9b59b6;
+            --game-mode: #e84393;
+            --cheat-mode: #f1c40f;
         }
 
         body {
@@ -36,7 +38,7 @@
             max-width: 600px;
             height: auto;
             min-height: 500px;
-            max-height: 95vh;
+            max-height: 98vh;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow: hidden;
@@ -48,16 +50,14 @@
         .header {
             background: var(--primary-dark);
             color: white;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             flex-shrink: 0;
             position: sticky;
             top: 0;
             z-index: 10;
         }
-
-        .header h1 { margin: 0; font-size: 20px; font-weight: 700; }
-        .header p { margin: 2px 0 0; font-size: 13px; opacity: 0.8; }
+        .header h1 { margin: 0; font-size: 18px; font-weight: 700; }
 
         .content-area {
             flex-grow: 1;
@@ -66,125 +66,64 @@
             scrollbar-width: thin;
         }
 
-        .screen { display: none; animation: fadeIn 0.3s ease; }
+        .screen { display: none; animation: fadeIn 0.2s ease; }
         .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Buttons */
-        .btn {
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Sarabun', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .btn { border: none; padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.1s; font-family: 'Sarabun', sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .btn:active { transform: scale(0.98); }
-        
-        .btn-main { background-color: var(--highlight); color: white; }
         .btn-start { background-color: var(--correct); color: white; font-size: 18px; padding: 15px; }
+        .btn-vocab-game { background-color: var(--game-mode); color: white; font-size: 18px; padding: 15px; }
         .btn-analysis { background-color: var(--purple); color: white; }
-        .btn-back { background-color: #95a5a6; color: white; margin-top: 15px; }
+        .btn-back { background-color: #95a5a6; color: white; margin-top: 10px; }
+        .btn-rec { background-color: var(--wrong); color: white; padding: 12px; animation: pulse 2s infinite; }
         
-        /* ปุ่มแนะนำให้ไปเรียน (Restore Feature) */
-        .btn-rec { 
-            background-color: var(--wrong); 
-            color: white; 
-            padding: 15px;
-            font-size: 18px;
-            animation: pulse 2s infinite; 
-        }
+        .nav-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-prev { background-color: #bdc3c7; color: #333; flex: 1; display: none; }
+        .btn-next { background-color: var(--primary-dark); color: white; flex: 2; display: none; animation: bounce 1s infinite; }
+        
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-
-        /* ปุ่มถัดไป */
-        .btn-next {
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 15px;
-            font-size: 18px;
-            margin-top: 15px;
-            animation: bounce 1s infinite;
-            display: none;
-        }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
         /* Menu Grid */
-        .grid-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .menu-card {
-            background: white;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .menu-card { background: white; border: 1px solid #eee; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .menu-card:hover { border-color: var(--highlight); transform: translateY(-2px); background-color: #f8f9fa; }
-        .menu-card .icon { font-size: 30px; display: block; margin-bottom: 5px; }
-        .menu-card .title { font-weight: bold; font-size: 14px; color: var(--primary-dark); }
+        .menu-card .icon { font-size: 24px; display: block; margin-bottom: 4px; }
+        .menu-card .title { font-weight: bold; font-size: 13px; color: var(--primary-dark); }
 
         /* Vocab Table */
-        .vocab-table { width: 100%; border-collapse: collapse; font-size: 15px; margin-bottom: 15px; }
+        .vocab-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 10px; }
         .vocab-table tr { border-bottom: 1px solid #eee; }
-        .vocab-table td { padding: 10px 5px; vertical-align: middle; }
-        .vocab-word { font-weight: bold; color: var(--highlight); font-size: 16px; }
-        .vocab-read { font-size: 12px; color: #888; font-style: italic; display: block; margin-top: 2px; }
+        .vocab-table td { padding: 8px 4px; vertical-align: middle; }
+        .vocab-word { font-weight: bold; color: var(--highlight); font-size: 15px; }
+        .vocab-read { font-size: 12px; color: #666; font-style: italic; display: block; margin-top: 1px; }
         .vocab-mean { text-align: right; font-weight: 500; }
 
-        /* Content Box */
-        .memory-box {
-            background-color: #fff8e1;
-            border-left: 4px solid #ffc107;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 4px;
-            font-size: 15px;
-        }
-
-        /* Recommendation Box (Analysis Screen) */
-        .recommend-box {
-            background-color: #fff0f0;
-            border: 2px dashed var(--wrong);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 20px;
-            display: none; /* ซ่อนไว้ก่อน */
-        }
-        .recommend-box h3 { margin-top: 0; color: var(--wrong); font-size: 18px; }
-        .recommend-box p { color: #555; margin-bottom: 15px; }
+        /* Cheat Sheet Table (New) */
+        .cheat-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 15px; background: #fff; border:1px solid #ddd; }
+        .cheat-table th { background: var(--primary-light); color: white; padding: 10px; text-align: left; }
+        .cheat-table td { border-bottom: 1px solid #eee; padding: 10px; vertical-align: top; }
+        .cheat-v2 { color: var(--wrong); font-weight: bold; font-size: 16px; }
+        .cheat-kw { color: var(--accent); font-weight: bold; display: block; margin-top: 4px; font-size: 12px; }
 
         /* Quiz UI */
         .progress-bar { height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden; margin-bottom: 10px; }
         .progress-fill { height: 100%; background: var(--correct); width: 0%; transition: width 0.3s; }
-        .quiz-header { display: flex; justify-content: space-between; font-size: 13px; color: #7f8c8d; margin-bottom: 5px; }
-        .question-box { font-size: 18px; font-weight: 600; color: var(--primary-dark); margin-bottom: 15px; line-height: 1.5; background: #f8f9fa; padding: 15px; border-radius: 10px; }
+        .quiz-header { display: flex; justify-content: space-between; font-size: 12px; color: #7f8c8d; margin-bottom: 5px; }
+        .question-box { font-size: 20px; font-weight: 700; color: var(--primary-dark); margin-bottom: 15px; line-height: 1.4; background: #f8f9fa; padding: 15px; border-radius: 10px; text-align: center; }
         
-        .option-btn {
-            background: white; border: 1px solid #ccc; padding: 12px 15px; border-radius: 10px; text-align: left; font-size: 16px; color: #444; cursor: pointer; transition: 0.1s; margin-bottom: 8px; position: relative;
-        }
+        .option-btn { background: white; border: 1px solid #ccc; padding: 12px 15px; border-radius: 8px; text-align: left; font-size: 16px; color: #444; cursor: pointer; transition: 0.1s; margin-bottom: 6px; position: relative; }
         .option-btn:hover { background-color: #f0f4f8; border-color: var(--highlight); }
-        .option-btn.correct { background-color: #d4edda; border-color: var(--correct); color: #155724; }
-        .option-btn.wrong { background-color: #f8d7da; border-color: var(--wrong); color: #721c24; opacity: 0.7; }
+        .option-btn.correct { background-color: #d4edda; border-color: var(--correct); color: #155724; pointer-events: none; }
+        .option-btn.wrong { background-color: #f8d7da; border-color: var(--wrong); color: #721c24; opacity: 0.8; pointer-events: none; }
+        .option-btn.disabled { pointer-events: none; opacity: 0.6; }
 
-        .feedback { margin-top: 15px; padding: 15px; border-radius: 10px; background-color: #e8f4fd; border: 1px solid #b6e0fe; display: none; text-align: center; }
+        .feedback { margin-top: 10px; padding: 10px; border-radius: 8px; background-color: #e8f4fd; border: 1px solid #b6e0fe; display: none; text-align: center; font-size: 14px; }
         .feedback.show { display: block; }
-        .stat-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
-        .stat-bad { color: var(--wrong); font-weight: bold; }
+        
+        .memory-box { background-color: #fff8e1; border-left: 4px solid #ffc107; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -193,20 +132,24 @@
 
 <div class="app-container">
     <div class="header">
-        <h1>👮 Police Exam Master</h1>
-        <p>ติวสอบนายสิบตำรวจ (ฉบับสมบูรณ์)</p>
+        <h1>👮 Police Exam Master: Ultimate</h1>
+        <p>ครบเครื่อง! 100+ ข้อ | ศัพท์ 120 คำ | สูตรลัด</p>
     </div>
 
     <div class="content-area">
 
         <div class="screen active" id="mainMenu">
-            <div style="text-align: center; margin: 20px 0;">
-                <div style="font-size: 50px;">🚔</div>
-                <h2 style="color: var(--primary-dark); margin: 10px 0;">ยินดีต้อนรับ</h2>
+            <div style="text-align: center; margin: 15px 0;">
+                <div style="font-size: 40px;">🚔</div>
+                <h2 style="color: var(--primary-dark); margin: 5px 0;">ว่าที่นสต.17🔥</h2>
             </div>
             
             <button class="btn btn-start" onclick="playClick(); startRandomQuiz()">
-                <span>📝 เริ่มทำข้อสอบ</span>
+                <span>📝 สอบรวม (Mixed 20 ข้อ)</span>
+            </button>
+            
+            <button class="btn btn-vocab-game" onclick="playClick(); startVocabGame()">
+                <span>🎮 เกมทายศัพท์ (มีคำอ่าน)</span>
             </button>
             
             <div class="grid-menu" style="margin-top: 15px;">
@@ -216,25 +159,29 @@
                 </div>
                 <div class="menu-card" onclick="playClick(); analyzeWeakness()">
                     <span class="icon">📊</span>
-                    <span class="title">สิ่งที่ต้องเรียนเพิ่ม</span>
+                    <span class="title">จุดอ่อนที่ต้องแก้</span>
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
+            <div style="text-align: center; margin-top: 15px;">
                 <small onclick="clearData()" style="color:#aaa; cursor:pointer; text-decoration:underline;">ล้างประวัติ</small>
             </div>
         </div>
 
         <div class="screen" id="learningMenu">
             <h3 style="margin-top:0;">เลือกหัวข้อติว</h3>
+            <button class="btn" style="background-color: var(--cheat-mode); color:#333; margin-bottom:15px;" onclick="playClick(); showLesson('lesson-cheat')">
+                🔥 <strong>ตารางสูตรลับ V.1 ➜ V.2</strong>
+            </button>
+
             <div class="grid-menu">
                 <div class="menu-card" onclick="playClick(); showLesson('lesson-vocab')">
                     <span class="icon">🗣️</span>
-                    <span class="title">ศัพท์ตำรวจ (พร้อมคำอ่าน)</span>
+                    <span class="title">ศัพท์ 120 คำ (อ่าน+แปล)</span>
                 </div>
                 <div class="menu-card" onclick="playClick(); showLesson('lesson-grammar')">
                     <span class="icon">⏳</span>
-                    <span class="title">Grammar ต้องรู้</span>
+                    <span class="title">Grammar สรุปย่อ</span>
                 </div>
                 <div class="menu-card" onclick="playClick(); showLesson('lesson-convo')">
                     <span class="icon">💬</span>
@@ -242,7 +189,7 @@
                 </div>
                 <div class="menu-card" onclick="playClick(); showLesson('lesson-tricks')">
                     <span class="icon">⚡</span>
-                    <span class="title">สูตรลัดช่วยจำ</span>
+                    <span class="title">สูตรลัดตัดช้อยส์</span>
                 </div>
             </div>
             <button class="btn btn-back" onclick="playClick(); showScreen('mainMenu')">กลับเมนูหลัก</button>
@@ -250,75 +197,160 @@
 
         <div class="screen" id="lessonContent">
             
-            <div id="lesson-vocab" class="lesson-detail" style="display:none;">
-                <h3 style="border-bottom:2px solid var(--accent); padding-bottom:5px;">🛑 ศัพท์ตำรวจ & กฎหมาย</h3>
-                <table class="vocab-table">
-                    <tr><td><span class="vocab-word">Arrest</span><span class="vocab-read">อะ-เรสท์</span></td><td class="vocab-mean">จับกุม</td></tr>
-                    <tr><td><span class="vocab-word">Suspect</span><span class="vocab-read">ซัส-เปคท์</span></td><td class="vocab-mean">ผู้ต้องสงสัย</td></tr>
-                    <tr><td><span class="vocab-word">Victim</span><span class="vocab-read">วิค-ทิม</span></td><td class="vocab-mean">เหยื่อ / ผู้เสียหาย</td></tr>
-                    <tr><td><span class="vocab-word">Witness</span><span class="vocab-read">วิท-เนส</span></td><td class="vocab-mean">พยาน</td></tr>
-                    <tr><td><span class="vocab-word">Evidence</span><span class="vocab-read">เอฟ-วิ-เดนซ์</span></td><td class="vocab-mean">หลักฐาน</td></tr>
-                    <tr><td><span class="vocab-word">Investigation</span><span class="vocab-read">อิน-เวส-ทิ-เก-ชั่น</span></td><td class="vocab-mean">การสอบสวน</td></tr>
-                    <tr><td><span class="vocab-word">Guilty</span><span class="vocab-read">กิล-ตี้</span></td><td class="vocab-mean">มีความผิด</td></tr>
-                    <tr><td><span class="vocab-word">Innocent</span><span class="vocab-read">อิน-โน-เซนท์</span></td><td class="vocab-mean">ผู้บริสุทธิ์</td></tr>
-                    <tr><td><span class="vocab-word">Fine</span><span class="vocab-read">ไฟน์</span></td><td class="vocab-mean">ค่าปรับ</td></tr>
-                    <tr><td><span class="vocab-word">Custody</span><span class="vocab-read">คัส-โต-ดี้</span></td><td class="vocab-mean">การคุมขัง</td></tr>
+            <div id="lesson-cheat" class="lesson-detail" style="display:none;">
+                <h3 style="border-bottom:2px solid var(--accent); padding-bottom:5px;">🔥 สูตรลัด: คำคู่ & คีย์เวิร์ด</h3>
+                
+                <p><strong>1. การผันกริยา (Present ➜ Past)</strong><br>
+                <small>เจอคำว่า <em>Yesterday, Last..., Ago, In 1999</em> ให้กาช่อง 2 ทันที!</small></p>
+                
+                <table class="cheat-table">
+                    <thead>
+                        <tr>
+                            <th>ช่อง 1 (ปัจจุบัน)</th>
+                            <th>ช่อง 2 (อดีต)</th>
+                            <th>วิธีใช้ / คีย์เวิร์ด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>is, am <br>(เป็น/อยู่/คือ)</td>
+                            <td><span class="cheat-v2">was</span></td>
+                            <td>ใช้กับประธาน 1 คน (He, She, It, I)<br><span class="cheat-kw">KW: Yesterday, Last night</span></td>
+                        </tr>
+                        <tr>
+                            <td>are <br>(เป็น/อยู่/คือ)</td>
+                            <td><span class="cheat-v2">were</span></td>
+                            <td>ใช้กับประธานหลายคน (You, We, They)<br><span class="cheat-kw">KW: Yesterday, Last year</span></td>
+                        </tr>
+                        <tr>
+                            <td>has, have <br>(มี/กิน)</td>
+                            <td><span class="cheat-v2">had</span></td>
+                            <td>แปลว่า "มีแล้ว/ทำแล้ว" (ใช้ได้ทุกประธาน)<br><span class="cheat-kw">KW: Before, Last...</span></td>
+                        </tr>
+                        <tr>
+                            <td>go <br>(ไป)</td>
+                            <td><span class="cheat-v2">went</span></td>
+                            <td>ไปมาแล้ว (จบไปแล้ว)<br><span class="cheat-kw">KW: ...ago</span></td>
+                        </tr>
+                        <tr>
+                            <td>do, does <br>(ทำ)</td>
+                            <td><span class="cheat-v2">did</span></td>
+                            <td>ทำไปแล้ว<br><span class="cheat-kw">KW: Yesterday</span></td>
+                        </tr>
+                    </tbody>
                 </table>
-                <h3 style="border-bottom:2px solid var(--highlight); padding-bottom:5px; margin-top:20px;">📚 ศัพท์ทั่วไปที่ออกบ่อย</h3>
+
+                <p><strong>2. คำบุพบท (Prepositions) ต้องจำ!</strong></p>
+                <table class="cheat-table">
+                    <thead>
+                        <tr>
+                            <th>คำศัพท์</th>
+                            <th>แปลว่า</th>
+                            <th>ต้องกาเมื่อเจอ... (คีย์เวิร์ดในโจทย์)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="cheat-v2">At</span></td>
+                            <td>ที่ / เวลาเป๊ะๆ</td>
+                            <td>
+                                ⏰ เวลา: 6:00 PM, Noon, Night<br>
+                                📍 สถานที่: At school, At the station
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="cheat-v2">On</span></td>
+                            <td>บน / วัน</td>
+                            <td>
+                                📅 วัน: Monday, Birthday, Christmas Day<br>
+                                📦 พื้นผิว: On the table, On the road
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="cheat-v2">In</span></td>
+                            <td>ใน</td>
+                            <td>
+                                🗓️ เดือน/ปี: In July, In 1999<br>
+                                🏙️ เมืองใหญ่: In Bangkok, In Thailand
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="cheat-v2">With</span></td>
+                            <td>กับ / ด้วย</td>
+                            <td>
+                                🤝 ไปกับคน: Go with my friend<br>
+                                🛠️ ใช้อุปกรณ์: Write with a pen
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="cheat-v2">Of</span></td>
+                            <td>ของ / แห่ง</td>
+                            <td>
+                                🔗 แสดงเจ้าของ: King of Thailand<br>
+                                ☕ บอกหมวดหมู่: Cup of coffee
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="lesson-vocab" class="lesson-detail" style="display:none;">
+                <h3 style="border-bottom:2px solid var(--accent); padding-bottom:5px;">🛑 คลังศัพท์ตำรวจ (120 คำ)</h3>
+                <input type="text" id="vocabSearch" placeholder="🔍 พิมพ์ค้นหาคำศัพท์..." style="width:90%; padding:8px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;" onkeyup="filterVocab()">
                 <table class="vocab-table">
-                    <tr><td><span class="vocab-word">Essential</span><span class="vocab-read">เอส-เซน-เชี่ยล</span></td><td class="vocab-mean">จำเป็น</td></tr>
-                    <tr><td><span class="vocab-word">Deficiency</span><span class="vocab-read">ดิ-ฟิ-เชี่ยน-ซี่</span></td><td class="vocab-mean">ความขาดแคลน</td></tr>
-                    <tr><td><span class="vocab-word">Amass</span><span class="vocab-read">อะ-แมส</span></td><td class="vocab-mean">สะสม</td></tr>
+                    <tbody id="vocabTableBody"></tbody>
                 </table>
             </div>
 
             <div id="lesson-grammar" class="lesson-detail" style="display:none;">
-                <h3>⏳ Grammar & Tense</h3>
+                <h3>⏳ Grammar สรุปย่อ (2 วันก่อนสอบ)</h3>
                 <div class="memory-box">
-                    <strong>1. Passive Voice (ถูกกระทำ):</strong><br>
-                    สูตร: <span style="color:blue">V.to be + V.3</span><br>
-                    - The thief <u>was arrested</u>.
+                    <strong>1. 12 Tenses (จำแค่นี้พอ):</strong><br>
+                    - <strong>Present Sim:</strong> จริง/นิสัย (always, usually) → V.1 (s/es)<br>
+                    - <strong>Present Cont:</strong> กำลังทำ (now) → is/am/are + ing<br>
+                    - <strong>Past Sim:</strong> จบแล้ว (ago, yesterday) → V.2<br>
+                    - <strong>Future:</strong> อนาคต (tomorrow) → will + V.1
                 </div>
                 <div class="memory-box">
-                    <strong>2. If-Clause:</strong><br>
-                    🔸 <strong>เป็นไปได้:</strong> If + V.1, ... will + V.1<br>
-                    🔸 <strong>ฝันเฟื่อง:</strong> If + V.2, ... would + V.1<br>
-                    <em>*ถ้าเป็นนก (If I were a bird) ใช้ were เสมอ</em>
+                    <strong>2. If-Clause (ออกชัวร์):</strong><br>
+                    - <strong>Type 1 (เป็นไปได้):</strong> If V.1, ... will V.1<br>
+                    - <strong>Type 2 (มโน):</strong> If V.2, ... would V.1<br>
+                    *จำ: If I <u>were</u> a bird (ใช้ were เสมอ)
                 </div>
-                <div class="memory-box">
-                    <strong>3. Keywords:</strong><br>
-                    - <strong>Since / For</strong> → Has/Have + V.3<br>
-                    - <strong>Now</strong> → is/am/are + ing<br>
-                    - <strong>Ago</strong> → V.2 (อดีต)
+                 <div class="memory-box">
+                    <strong>3. Subject-Verb Agreement:</strong><br>
+                    - ประธานคนเดียว (He/She/It) → กริยาเติม <strong>s</strong><br>
+                    - ประธานหลายคน (They/We/Police) → กริยา <strong>ไม่เติม s</strong><br>
+                    - <em>Everybody / Everyone</em> นับเป็น 1 คน (เอกพจน์)
                 </div>
             </div>
 
             <div id="lesson-tricks" class="lesson-detail" style="display:none;">
                 <h3>⚡ สูตรลัดช่วยจำ</h3>
                 <div class="memory-box">
-                    <strong>🛑 Stop: หยุดแบบไหน?</strong><br>
-                    - <strong>Stop V.ing</strong> = เลิกทำถาวร (Stop smoking)<br>
-                    - <strong>Stop To V.1</strong> = หยุดเพื่อทำอย่างอื่น
+                    <strong>🛑 Stop V.ing vs Stop to V.1</strong><br>
+                    - Stop smok<strong>ing</strong> (เลิกสูบถาวร)<br>
+                    - Stop <strong>to</strong> smoke (หยุดงาน...เพื่อเดินไปสูบ)
                 </div>
                 <div class="memory-box">
-                    <strong>👮 Make: บังคับใคร</strong><br>
-                    - Make someone + <strong>V.pure</strong> (ห้ามมี to)<br>
-                    - He made me <u>cry</u>.
+                    <strong>👮 Passive Voice (ถูกกระทำ)</strong><br>
+                    - เห็น by... หรือประธานเป็นสิ่งของ → <strong>V.to be + V.3</strong><br>
+                    - The car <u>was stolen</u>.
+                </div>
+                <div class="memory-box">
+                    <strong>คำเชื่อม (Conjunctions):</strong><br>
+                    - <strong>Because</strong> + ประโยค (มีประธาน+กริยา)<br>
+                    - <strong>Because of</strong> + คำนาม (Because of the rain)<br>
+                    - <strong>Although</strong> = แม้ว่า (เชื่อมประโยคขัดแย้ง)
                 </div>
             </div>
 
             <div id="lesson-convo" class="lesson-detail" style="display:none;">
                 <h3>💬 Conversation</h3>
                 <div class="memory-box">
-                    <strong>❓ Mind: รังเกียจไหม?</strong><br>
-                    "Do you mind...?"<br>
-                    ✅ <strong>อนุญาต:</strong> ตอบ "No, not at all"<br>
-                    ❌ <strong>ไม่อนุญาต:</strong> ตอบ "Yes" (รังเกียจ)
-                </div>
-                <div class="memory-box">
-                    <strong>🙏 ขอความช่วยเหลือ</strong><br>
-                    - May I see your ID card? (ขอดูบัตร)<br>
-                    - Here you are. (นี่ยื่นให้)
+                    <strong>❓ Mind (รังเกียจไหม?)</strong><br>
+                    - Do you mind...?<br>
+                    - ถ้า "โอเค/เชิญเลย" ตอบ <strong>No, not at all</strong> หรือ <strong>Go ahead</strong>
                 </div>
             </div>
 
@@ -326,58 +358,45 @@
         </div>
 
         <div class="screen" id="analysisScreen">
-            <h3 style="text-align:center;">📊 ผลวิเคราะห์จุดอ่อน</h3>
-            
-            <div id="recommendationArea" class="recommend-box">
-                <h3>⚠️ สิ่งที่คุณต้องรีบไปติว!</h3>
-                <p>คุณตอบผิดในหมวด <strong id="weakPointName">...</strong> มากที่สุด</p>
-                <button id="goToLessonBtn" class="btn btn-rec">🚀 ไปเรียนเรื่องนี้เดี๋ยวนี้</button>
+            <h3 style="text-align:center;">📊 ผลวิเคราะห์ (Sprint)</h3>
+            <div id="recommendationArea" class="recommend-box" style="background:#fff0f0; padding:15px; border-radius:10px; text-align:center; display:none; border:2px dashed var(--wrong);">
+                <h3>⚠️ จุดอ่อนที่ต้องแก้ด่วน!</h3>
+                <p>คุณผิดเรื่อง <strong id="weakPointName">...</strong> บ่อยสุด</p>
+                <button id="goToLessonBtn" class="btn btn-rec">🚀 ไปติวเรื่องนี้เดี๋ยวนี้</button>
             </div>
-
-            <div id="statContainer" style="background:white; border-radius:10px; padding:10px; border:1px solid #eee;">
-                </div>
-            
-            <div id="noDataMsg" style="text-align:center; padding:20px; color:#999; display:none;">
-                ยังไม่มีข้อมูลการสอบ<br>ลองไปทำข้อสอบก่อนนะครับ
-            </div>
-            
+            <div id="statContainer" style="margin-top:15px; background:white; padding:10px; border-radius:10px;"></div>
             <button class="btn btn-back" onclick="playClick(); showScreen('mainMenu')">กลับเมนูหลัก</button>
         </div>
 
         <div class="screen" id="quizScreen">
             <div class="quiz-header">
                 <span id="qCategoryTag">หมวด: Grammar</span>
-                <span id="qCounter">1/15</span>
+                <span id="qCounter">1/20</span>
             </div>
             <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
             
             <div id="questionText" class="question-box">Loading...</div>
+            <div id="subQuestionText" style="text-align:center; color:#666; font-size:14px; margin-bottom:10px; display:none;">แปลว่าอะไร?</div>
             
-            <div id="optionsList">
-                </div>
-
-            <div id="feedback" class="feedback">
-                </div>
+            <div id="optionsList"></div>
+            <div id="feedback" class="feedback"></div>
             
-            <button id="nextBtn" class="btn btn-next" onclick="playClick(); nextQuestion()">
-                ไปข้อถัดไป ➜
-            </button>
+            <div class="nav-buttons">
+                <button id="prevBtn" class="btn btn-prev" onclick="playClick(); prevQuestion()">⬅️ ข้อก่อนหน้า</button>
+                <button id="nextBtn" class="btn btn-next" onclick="playClick(); nextQuestion()">ข้อถัดไป ➜</button>
+            </div>
         </div>
 
         <div class="screen" id="resultScreen">
             <div style="text-align: center; padding-top: 30px;">
                 <div style="width: 100px; height: 100px; background: var(--primary-dark); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; font-weight: bold; margin: 0 auto 20px;">
-                    <span id="finalScore">0/15</span>
+                    <span id="finalScore">0/0</span>
                 </div>
                 <h2 id="resultTitle">ยอดเยี่ยม!</h2>
-                <p>บันทึกผลแล้ว ไปดูจุดอ่อนกันเถอะ</p>
                 
-                <button class="btn btn-analysis" onclick="playClick(); analyzeWeakness()">
-                    📊 ดูสิ่งที่ต้องเรียนเพิ่ม
-                </button>
-                <button class="btn btn-start" onclick="playClick(); startRandomQuiz()">
-                    🔄 สอบใหม่อีกครั้ง
-                </button>
+                <button class="btn btn-analysis" onclick="playClick(); analyzeWeakness()">📊 ดูจุดอ่อน</button>
+                <button class="btn btn-start" onclick="playClick(); startRandomQuiz()">📝 สอบรวมใหม่</button>
+                <button class="btn btn-vocab-game" onclick="playClick(); startVocabGame()">🎮 เล่นเกมศัพท์</button>
                 <button class="btn btn-back" onclick="playClick(); showScreen('mainMenu')">กลับเมนูหลัก</button>
             </div>
         </div>
@@ -386,37 +405,192 @@
 </div>
 
 <script>
-    // --- Audio ---
     function playClick() {
         const audio = document.getElementById("clickSound");
         audio.currentTime = 0;
         audio.play().catch(e => {});
     }
 
-    // --- Data: Question Bank ---
+    // --- 1. Question Bank (100+ Questions) ---
     const questionBank = [
-        { q: "The thief ______ by the police yesterday.", options: ["arrests", "was arrested", "is arrested", "arrested"], answer: 1, note: "Passive Voice (ถูกกระทำ) ในอดีตใช้ was + V.3", cat: "grammar" },
-        { q: "If it rains tomorrow, I ______ at home.", options: ["stay", "will stay", "stayed", "would stay"], answer: 1, note: "If-Clause แบบ 1: เป็นไปได้ในอนาคต (will + V.1)", cat: "grammar" },
-        { q: "If I ______ a bird, I would fly.", options: ["was", "am", "were", "been"], answer: 2, note: "If-Clause แบบ 2: สมมติ (ใช้ were กับทุกประธาน)", cat: "grammar" },
-        { q: "Whenever she hears a sad story, she ______.", options: ["weeps", "will weep", "is weeping", "has wept"], answer: 0, note: "Whenever = เป็นนิสัย ใช้ Present Simple (V.1)", cat: "grammar" },
-        { q: "I know that he ______ right now.", options: ["works", "is working", "has worked", "worked"], answer: 1, note: "Right now = กำลังทำ (is/am/are + ing)", cat: "grammar" },
-        { q: "She has lived here ______ 10 years.", options: ["since", "for", "ago", "during"], answer: 1, note: "For + จำนวนเวลา (เป็นเวลา...)", cat: "grammar" },
-        { q: "We hunted for the pirate's buried ______.", options: ["treasure", "gloom", "brood", "evidence"], answer: 0, note: "Buried treasure = สมบัติที่ถูกฝัง", cat: "vocab" },
-        { q: "The man was found ______ of robbery.", options: ["guilty", "sorry", "happy", "free"], answer: 0, note: "Guilty = มีความผิด", cat: "vocab" },
-        { q: "You must pay a ______ for illegal parking.", options: ["price", "fine", "cost", "money"], answer: 1, note: "Fine = ค่าปรับ", cat: "vocab" },
-        { q: "Police: 'May I see your ID?' <br> You: '______'", options: ["Yes, I do.", "Here you are.", "No, thank you.", "I am driving."], answer: 1, note: "ยื่นของให้พูด Here you are.", cat: "convo" },
-        { q: "Do you mind if I sit here?", options: ["Yes, I do.", "No, not at all.", "Thank you.", "I am sorry."], answer: 1, note: "ถ้าอนุญาตให้ตอบ No, not at all (ไม่รังเกียจ)", cat: "convo" },
+        // --- Tenses & Verb Forms ---
+        { q: "If it rains tomorrow, I ______ at home.", options: ["stay", "will stay", "stayed", "would stay"], answer: 1, note: "If-Clause Type 1: If + V.1, will + V.1", cat: "grammar" },
+        { q: "If I ______ a bird, I would fly.", options: ["was", "am", "were", "been"], answer: 2, note: "If-Clause Type 2: สมมติ ใช้ were กับทุกประธาน", cat: "grammar" },
+        { q: "The thief ______ by the police yesterday.", options: ["arrests", "was arrested", "is arrested", "arrested"], answer: 1, note: "Passive Voice + Past (yesterday): was + V.3", cat: "grammar" },
+        { q: "Look! The bus ______.", options: ["come", "comes", "is coming", "came"], answer: 2, note: "Look! = กำลังเกิด (is coming)", cat: "grammar" },
+        { q: "He ______ to the station an hour ago.", options: ["go", "goes", "went", "gone"], answer: 2, note: "Ago = อดีต (V.2 went)", cat: "grammar" },
+        { q: "She has lived here ______ 2010.", options: ["since", "for", "ago", "during"], answer: 0, note: "Since + จุดเริ่มต้นเวลา (ตั้งแต่ปี...)", cat: "grammar" },
+        { q: "I have lived here ______ 10 years.", options: ["since", "for", "ago", "in"], answer: 1, note: "For + จำนวนระยะเวลา", cat: "grammar" },
+        { q: "While I ______ TV, the phone rang.", options: ["watch", "watched", "was watching", "is watching"], answer: 2, note: "Past Cont (กำลังทำ) แทรกด้วย Past Sim", cat: "grammar" },
+        { q: "She usually ______ to school by bus.", options: ["go", "goes", "going", "went"], answer: 1, note: "Usually = กิจวัตร (Present Sim) ประธาน She กริยาเติม es", cat: "grammar" },
+        { q: "They ______ football right now.", options: ["play", "plays", "are playing", "played"], answer: 2, note: "Right now = กำลังทำ", cat: "grammar" },
+        { q: "Yesterday, I ______ a loud noise.", options: ["hear", "hears", "heard", "hearing"], answer: 2, note: "Yesterday = อดีต (V.2 heard)", cat: "grammar" },
+        
+        // --- Subject-Verb Agreement & Prepositions ---
+        { q: "Everyone ______ to be happy.", options: ["want", "wants", "wanting", "wanted"], answer: 1, note: "Everyone เป็นเอกพจน์ กริยาเติม s", cat: "grammar" },
+        { q: "One of the boys ______ sick.", options: ["is", "are", "were", "have"], answer: 0, note: "One of... (หนึ่งใน) ประธานคือ One ใช้ is", cat: "grammar" },
+        { q: "He is good ______ English.", options: ["in", "on", "at", "by"], answer: 2, note: "Good at = เก่งในเรื่อง...", cat: "grammar" },
+        { q: "I was born ______ July.", options: ["in", "on", "at", "of"], answer: 0, note: "In + เดือน/ปี", cat: "grammar" },
+        { q: "See you ______ Monday.", options: ["in", "on", "at", "by"], answer: 1, note: "On + วัน", cat: "grammar" },
+        { q: "There isn't ______ water left.", options: ["many", "some", "much", "few"], answer: 2, note: "Water นับไม่ได้ + ปฏิเสธ ใช้ Much", cat: "grammar" },
+        { q: "Do you have ______ money?", options: ["some", "any", "many", "few"], answer: 1, note: "คำถามใช้ Any", cat: "grammar" },
+        { q: "______ car is this?", options: ["Who", "Whose", "Whom", "Who's"], answer: 1, note: "Whose = ของใคร", cat: "grammar" },
+        { q: "The book is ______ the table.", options: ["in", "on", "at", "to"], answer: 1, note: "On the table = บนโต๊ะ", cat: "grammar" },
+        { q: "The police station is ______ the bank.", options: ["next", "near to", "next to", "between"], answer: 2, note: "Next to = ติดกับ/ถัดจาก", cat: "grammar" },
+        
+        // --- Conjunctions & Connectors ---
+        { q: "He didn't go to work ______ he was sick.", options: ["because", "because of", "although", "but"], answer: 0, note: "Because + ประโยค (he was sick)", cat: "grammar" },
+        { q: "______ the rain, we stayed home.", options: ["Because", "Because of", "Although", "However"], answer: 1, note: "Because of + คำนาม (the rain)", cat: "grammar" },
+        { q: "______ it was raining, he went out.", options: ["Because", "Due to", "Although", "Despite"], answer: 2, note: "Although = แม้ว่า (ขัดแย้ง)", cat: "grammar" },
+        
+        // --- Vocab & Tricks ---
+        { q: "We avoided ______ him.", options: ["meet", "to meet", "meeting", "met"], answer: 2, note: "Avoid + V.ing", cat: "tricks" },
+        { q: "She enjoys ______ books.", options: ["read", "reading", "to read", "reads"], answer: 1, note: "Enjoy + V.ing", cat: "tricks" },
+        { q: "You ______ stop when the light is red.", options: ["can", "may", "must", "should"], answer: 2, note: "Must = ต้อง (กฎหมาย)", cat: "grammar" },
         { q: "I stop ______ cigarette.", options: ["smoking", "to smoke", "smokes", "smoke"], answer: 0, note: "Stop + ing = เลิกทำสิ่งนั้นถาวร", cat: "tricks" },
         { q: "He made me ______.", options: ["to cry", "crying", "cry", "cried"], answer: 2, note: "Make someone + V.pure (ไม่มี to)", cat: "tricks" },
-        { q: "A person who sees a crime is a ______.", options: ["suspect", "witness", "victim", "judge"], answer: 1, note: "Witness = พยาน", cat: "vocab" },
-        { q: "What is the OPPOSITE of 'Innocent'?", options: ["Guilty", "Safe", "Kind", "Happy"], answer: 0, note: "Innocent (บริสุทธิ์) ตรงข้ามกับ Guilty (ผิด)", cat: "vocab" }
+
+        // --- Reading Signs & Notices ---
+        { q: "Sign: <b>NO ENTRY</b>", options: ["You can enter.", "Do not enter.", "Park here.", "Exit only."], answer: 1, note: "No Entry = ห้ามเข้า", cat: "grammar" },
+        { q: "Sign: <b>OUT OF ORDER</b>", options: ["Working.", "Broken.", "Open.", "New."], answer: 1, note: "Out of order = เสีย", cat: "grammar" },
+        { q: "Sign: <b>NO PARKING</b>", options: ["Park here.", "Do not park.", "Free parking.", "Parking lot."], answer: 1, note: "No Parking = ห้ามจอด", cat: "grammar" },
+        { q: "Notice: <b>WET PAINT</b>", options: ["Touch it.", "Do not touch.", "Paint it.", "Dry paint."], answer: 1, note: "Wet Paint = สีเพิ่งทา (ยังไม่แห้ง)", cat: "grammar" },
+        
+        // --- Conversation (Police Situations) ---
+        { q: "A: Thank you very much. <br> B: ______", options: ["Never mind.", "You're welcome.", "I'm sorry.", "Good luck."], answer: 1, note: "ตอบรับขอบคุณ = You're welcome", cat: "convo" },
+        { q: "A: I'm sorry I'm late. <br> B: ______", options: ["Good idea.", "Never mind.", "Yes, please.", "Thank you."], answer: 1, note: "ตอบรับขอโทษ = Never mind", cat: "convo" },
+        { q: "Tourist: Excuse me, where is the police station? <br> You: ______", options: ["Yes, I am.", "Go straight and turn left.", "I want to go.", "It is big."], answer: 1, note: "บอกทาง: Go straight...", cat: "convo" },
+        { q: "Officer: May I see your license? <br> Driver: ______", options: ["No, thank you.", "Here you are.", "Yes, I do.", "I am driving."], answer: 1, note: "ยื่นของให้พูด Here you are", cat: "convo" },
+        { q: "Do you mind if I open the window?", options: ["Yes, I do.", "No, not at all.", "Thank you.", "I am sorry."], answer: 1, note: "อนุญาตให้ตอบ No, not at all", cat: "convo" },
+        { q: "Victim: Help! My bag was stolen. <br> Police: ______", options: ["You are welcome.", "Calm down, please tell me what happened.", "Go away.", "It is yours."], answer: 1, note: "ตำรวจต้องบอกให้ใจเย็นและเล่าเหตุการณ์", cat: "convo" },
+        { q: "Driver: I was driving too fast. I'm sorry. <br> Officer: ______", options: ["Good job.", "I have to give you a ticket.", "Don't worry.", "Go home."], answer: 1, note: "ขับรถเร็ว = ต้องออกใบสั่ง (Ticket)", cat: "convo" },
+        
+        // --- More General Exam Items ---
+        { q: "Which word means 'Start'?", options: ["End", "Finish", "Begin", "Stop"], answer: 2, note: "Begin = Start (เริ่ม)", cat: "vocab" },
+        { q: "Which word is OPPOSITE to 'Dangerous'?", options: ["Safe", "Scary", "Risk", "Bad"], answer: 0, note: "Safe (ปลอดภัย) ตรงข้าม Dangerous", cat: "vocab" },
+        { q: "My car ______ down yesterday.", options: ["break", "broke", "broken", "breaking"], answer: 1, note: "Break down = เสีย (อดีตใช้ Broke)", cat: "grammar" },
+        { q: "The suspect is under ______.", options: ["arrest", "home", "school", "hospital"], answer: 0, note: "Under arrest = ถูกจับกุม", cat: "vocab" },
+        { q: "Please ______ your seatbelt.", options: ["take off", "fasten", "open", "close"], answer: 1, note: "Fasten seatbelt = คาดเข็มขัด", cat: "vocab" },
+        { q: "He was charged ______ murder.", options: ["of", "with", "at", "for"], answer: 1, note: "Charged with = ถูกตั้งข้อหา...", cat: "grammar" },
+        { q: "The police are ______ the case.", options: ["looking", "investigating", "inventing", "inviting"], answer: 1, note: "Investigating = สืบสวน", cat: "vocab" },
+        { q: "You must pay a ______ for parking here.", options: ["price", "fine", "cost", "bill"], answer: 1, note: "Fine = ค่าปรับ", cat: "vocab" }
     ];
 
-    // --- State ---
+    // --- 2. Vocab Database (120 Words) ---
+    const vocabData = [
+        { en: "Arrest", read: "อะ-เรสท์", th: "จับกุม" },
+        { en: "Warrant", read: "วอร์-แรนท์", th: "หมายจับ/ค้น" },
+        { en: "Suspect", read: "ซัส-เปคท์", th: "ผู้ต้องสงสัย" },
+        { en: "Victim", read: "วิค-ทิม", th: "เหยื่อ" },
+        { en: "Witness", read: "วิท-เนส", th: "พยาน" },
+        { en: "Evidence", read: "เอฟ-วิ-เดนซ์", th: "หลักฐาน" },
+        { en: "Investigation", read: "อิน-เวส-ทิ-เก-ชั่น", th: "การสอบสวน" },
+        { en: "Interrogate", read: "อิน-เทอ-โร-เกท", th: "สอบปากคำ" },
+        { en: "Custody", read: "คัส-โต-ดี้", th: "การคุมขัง" },
+        { en: "Handcuffs", read: "แฮนด์-คัฟส์", th: "กุญแจมือ" },
+        { en: "Patrol", read: "พะ-โทรล", th: "ลาดตระเวน" },
+        { en: "Officer", read: "ออฟ-ฟิ-เซอร์", th: "เจ้าหน้าที่" },
+        { en: "Sergeant", read: "ซาร์-เจินท์", th: "จ่า/นายสิบ" },
+        { en: "Commander", read: "คอม-แมน-เดอร์", th: "ผู้บังคับบัญชา" },
+        { en: "Station", read: "สเต-ชั่น", th: "สถานี" },
+        { en: "Crime", read: "ไครม์", th: "อาชญากรรม" },
+        { en: "Scene", read: "ซีน", th: "ที่เกิดเหตุ" },
+        { en: "Fingerprint", read: "ฟิง-เกอร์-พรินท์", th: "ลายนิ้วมือ" },
+        { en: "Weapon", read: "เวพ-พ่อน", th: "อาวุธ" },
+        { en: "Gunshot", read: "กัน-ช็อต", th: "รอยกระสุน" },
+        { en: "Court", read: "คอร์ท", th: "ศาล" },
+        { en: "Judge", read: "จัดจ์", th: "ผู้พิพากษา" },
+        { en: "Lawyer", read: "ลอ-เย่อร์", th: "ทนายความ" },
+        { en: "Prosecutor", read: "พร อส-สิ-คิว-เตอร์", th: "อัยการ" },
+        { en: "Defendant", read: "ดิ-เฟน-แดนท์", th: "จำเลย" },
+        { en: "Plaintiff", read: "เพลน-ทิฟ", th: "โจทก์" },
+        { en: "Verdict", read: "เวอร์-ดิคท์", th: "คำตัดสิน" },
+        { en: "Sentence", read: "เซน-เท้นซ์", th: "บทลงโทษ" },
+        { en: "Guilty", read: "กิล-ตี้", th: "มีความผิด" },
+        { en: "Innocent", read: "อิน-โน-เซนท์", th: "บริสุทธิ์" },
+        { en: "Appeal", read: "อะ-พีล", th: "อุทธรณ์" },
+        { en: "Bail", read: "เบล", th: "ประกันตัว" },
+        { en: "Fine", read: "ไฟน์", th: "ค่าปรับ" },
+        { en: "Jail", read: "เจล", th: "คุก (เล็ก)" },
+        { en: "Prison", read: "พริ-ซั่น", th: "เรือนจำ (ใหญ่)" },
+        { en: "Law", read: "ลอว์", th: "กฎหมาย" },
+        { en: "Justice", read: "จัส-ทิซ", th: "ความยุติธรรม" },
+        { en: "Rights", read: "ไรทส์", th: "สิทธิ" },
+        { en: "Confess", read: "คอน-เฟส", th: "สารภาพ" },
+        { en: "Deny", read: "ดิ-นาย", th: "ปฏิเสธ" },
+        { en: "Essential", read: "เอส-เซน-เชี่ยล", th: "จำเป็น" },
+        { en: "Deficiency", read: "ดิ-ฟิ-เชี่ยน-ซี่", th: "ขาดแคลน" },
+        { en: "Amass", read: "อะ-แมส", th: "สะสม" },
+        { en: "Abundant", read: "อะ-บัน-แดนท์", th: "มากมาย" },
+        { en: "Emergency", read: "อี-เมอ-เจน-ซี่", th: "ฉุกเฉิน" },
+        { en: "Urgent", read: "เออ-เจ้นท์", th: "เร่งด่วน" },
+        { en: "Accident", read: "แอค-ซิ-เดนท์", th: "อุบัติเหตุ" },
+        { en: "Injure", read: "อิน-เจ้อ", th: "บาดเจ็บ" },
+        { en: "Traffic", read: "แทรฟ-ฟิค", th: "จราจร" },
+        { en: "Ticket", read: "ทิค-เก็ต", th: "ใบสั่ง" },
+        { en: "License", read: "ไล-เซ่นส์", th: "ใบอนุญาต" },
+        { en: "Identify", read: "ไอ-เดน-ทิ-ฟาย", th: "ระบุตัวตน" },
+        { en: "Search", read: "เซิร์ช", th: "ค้นหา" },
+        { en: "Seize", read: "ซีซ", th: "ยึด/อายัด" },
+        { en: "Smuggle", read: "สมัก-เกิ้ล", th: "ลักลอบ" },
+        { en: "Drug", read: "ดรัก", th: "ยาเสพติด" },
+        { en: "Theft", read: "เธฟท์", th: "การขโมย" },
+        { en: "Robbery", read: "ร็อบ-เบอ-รี่", th: "การปล้น" },
+        { en: "Murder", read: "เมอ-เดอร์", th: "ฆาตกรรม" },
+        { en: "Assault", read: "อะ-ซอลท์", th: "ทำร้ายร่างกาย" },
+        { en: "Fraud", read: "ฟรอด", th: "ฉ้อโกง" },
+        { en: "Bribe", read: "ไบรบ์", th: "สินบน" },
+        { en: "Corruption", read: "คอ-รัป-ชั่น", th: "ทุจริต" },
+        { en: "Kidnap", read: "คิด-แนป", th: "ลักพาตัว" },
+        { en: "Hostage", read: "ฮอส-เทจ", th: "ตัวประกัน" },
+        { en: "Arson", read: "อาร์-ซั่น", th: "ลอบวางเพลิง" },
+        { en: "Burglary", read: "เบอร์-กลา-รี่", th: "ย่างเบา/งัดแงะ" },
+        { en: "Accomplice", read: "อะ-คอม-พลิซ", th: "ผู้สมรู้ร่วมคิด" },
+        { en: "Alibi", read: "แอ-ลิ-บาย", th: "ถิ่นที่อยู่(ข้ออ้าง)" },
+        { en: "Autopsy", read: "ออ-ท็อป-ซี่", th: "ชันสูตรศพ" },
+        { en: "Forensic", read: "ฟอ-เรน-ซิก", th: "นิติเวช" },
+        { en: "Testify", read: "เทส-ทิ-ฟาย", th: "ให้การเป็นพยาน" },
+        { en: "Oath", read: "โอธ", th: "คำสาบาน" },
+        { en: "Penalty", read: "เพน-นัล-ตี้", th: "การลงโทษ" },
+        { en: "Probation", read: "โปร-เบ-ชั่น", th: "การคุมประพฤติ" },
+        { en: "Parole", read: "พะ-โรล", th: "ทัณฑ์บน" },
+        { en: "Immigration", read: "อิม-มิ-เกร-ชั่น", th: "การตรวจคนเข้าเมือง" },
+        { en: "Border", read: "บอร์-เดอร์", th: "ชายแดน" },
+        { en: "Checkpoint", read: "เช็ค-พอยท์", th: "ด่านตรวจ" },
+        { en: "Narcotics", read: "นาร์-คอ-ติกส์", th: "ยาเสพติด(ทางการ)" },
+        { en: "Trafficking", read: "แทรฟ-ฟิก-กิ้ง", th: "การค้ามนุษย์/ยา" },
+        { en: "Raid", read: "เรด", th: "การจู่โจม/บุกค้น" },
+        { en: "Squad", read: "สควอด", th: "หมู่/หน่วย" },
+        { en: "Uniform", read: "ยู-นิ-ฟอร์ม", th: "เครื่องแบบ" },
+        { en: "Badge", read: "แบดจ์", th: "ตราเจ้าหน้าที่" },
+        { en: "Pistol", read: "พิส-ทอล", th: "ปืนพก" },
+        { en: "Bullet", read: "บุล-เล็ท", th: "กระสุน" },
+        { en: "Helmet", read: "เฮล-เม็ท", th: "หมวกกันน็อค" },
+        { en: "Vehicle", read: "วี-ฮิ-เคิล", th: "ยานพาหนะ" },
+        { en: "Ambulance", read: "แอม-บู-แลนซ์", th: "รถพยาบาล" },
+        { en: "Rescue", read: "เรส-คิว", th: "การกู้ภัย" },
+        { en: "Secure", read: "ซี-เคียว", th: "ปลอดภัย/แน่นหนา" },
+        { en: "Protect", read: "โปร-เทคท์", th: "ปกป้อง" },
+        { en: "Serve", read: "เสิร์ฟ", th: "รับใช้/บริการ" },
+        { en: "Duty", read: "ดิว-ตี้", th: "หน้าที่" },
+        { en: "Rank", read: "แรงค์", th: "ยศ" },
+        { en: "Salute", read: "สะ-ลูท", th: "วันทยาหัตถ์" },
+        { en: "Report", read: "รี-พอร์ต", th: "รายงาน" },
+        { en: "Order", read: "ออ-เดอร์", th: "คำสั่ง" },
+        { en: "Force", read: "ฟอร์ซ", th: "กำลังพล/บังคับ" },
+        { en: "Department", read: "ดิ-พาร์ท-เม้นท์", th: "แผนก/กรม" },
+        { en: "Civilian", read: "ซิ-วิล-เลี่ยน", th: "พลเรือน" },
+        { en: "Foreigner", read: "ฟอ-เรน-เนอร์", th: "ชาวต่างชาติ" },
+        { en: "Embassy", read: "เอ็ม-บัส-ซี่", th: "สถานทูต" },
+        { en: "Passport", read: "พาส-พอร์ต", th: "หนังสือเดินทาง" },
+        { en: "Visa", read: "วี-ซ่า", th: "วีซ่า" }
+    ];
+
+    // --- State & Storage ---
     let currentQuizList = [];
     let currentIdx = 0;
     let score = 0;
-    let canAnswer = true;
+    let userAnswers = []; // Store user answers: [null, 2, 0, 1, ...]
     let userStats = JSON.parse(localStorage.getItem('policeExamStats')) || { grammar:0, vocab:0, convo:0, tricks:0, totalWrong:0 };
 
     function saveStats() { localStorage.setItem('policeExamStats', JSON.stringify(userStats)); }
@@ -429,7 +603,7 @@
         }
     }
 
-    // --- Navigation ---
+    // --- Navigation & UI ---
     function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -440,117 +614,158 @@
         showScreen('lessonContent');
     }
 
-    // --- Analysis Logic (Restored!) ---
-    function analyzeWeakness() {
-        showScreen('analysisScreen');
-        const container = document.getElementById('statContainer');
-        const noData = document.getElementById('noDataMsg');
-        const recArea = document.getElementById('recommendationArea');
-        
-        if (userStats.totalWrong === 0) {
-            container.innerHTML = "";
-            recArea.style.display = 'none';
-            noData.style.display = 'block';
-            return;
-        }
-        noData.style.display = 'none';
-        
-        // 1. หาจุดอ่อนที่สุด
-        const labels = { 'grammar':'Grammar', 'vocab':'คำศัพท์', 'convo':'สนทนา', 'tricks':'สูตรจำ' };
-        const lessonMap = { 'grammar':'lesson-grammar', 'vocab':'lesson-vocab', 'convo':'lesson-convo', 'tricks':'lesson-tricks' };
-        
-        let maxWrong = -1;
-        let weakKey = "";
-
-        let html = "";
-        Object.keys(labels).forEach(key => {
-            const count = userStats[key];
-            if(count > 0) {
-                html += `<div class="stat-row"><span>${labels[key]}</span><span class="stat-bad">ผิด ${count} ครั้ง</span></div>`;
-            }
-            if(count > maxWrong) {
-                maxWrong = count;
-                weakKey = key;
-            }
+    function renderVocabTable() {
+        const tbody = document.getElementById('vocabTableBody');
+        let html = '';
+        vocabData.forEach(v => {
+            html += `<tr><td><span class="vocab-word">${v.en}</span><span class="vocab-read">${v.read}</span></td><td class="vocab-mean">${v.th}</td></tr>`;
         });
-        container.innerHTML = html;
-
-        // 2. แสดงกล่องแนะนำถ้ามีข้อผิด
-        if (maxWrong > 0) {
-            recArea.style.display = 'block';
-            document.getElementById('weakPointName').innerText = labels[weakKey];
-            
-            // ตั้งค่าปุ่มให้กดแล้ววาร์ปไปหน้าเนื้อหานั้น
-            const btn = document.getElementById('goToLessonBtn');
-            btn.onclick = function() {
-                playClick();
-                showLesson(lessonMap[weakKey]);
-            };
-        } else {
-            recArea.style.display = 'none';
+        tbody.innerHTML = html;
+    }
+    function filterVocab() {
+        const input = document.getElementById('vocabSearch');
+        const filter = input.value.toLowerCase();
+        const rows = document.getElementById('vocabTableBody').getElementsByTagName('tr');
+        for (let i = 0; i < rows.length; i++) {
+            const txt = rows[i].textContent.toLowerCase();
+            rows[i].style.display = txt.includes(filter) ? "" : "none";
         }
     }
+    renderVocabTable();
 
-    // --- Quiz Logic ---
+    // --- Quiz Generators ---
+    function generateVocabQuestions(amount, useReadingMode) {
+        const result = [];
+        const pool = [...vocabData].sort(() => 0.5 - Math.random());
+        for (let i = 0; i < Math.min(amount, pool.length); i++) {
+            const correctObj = pool[i];
+            const distractorItems = vocabData.filter(item => item.en !== correctObj.en).sort(() => 0.5 - Math.random()).slice(0, 3);
+            const options = [correctObj.th, ...distractorItems.map(d => d.th)].sort(() => 0.5 - Math.random());
+            let qHtml = `<span style="font-size:32px; color:#2c3e50;">${correctObj.en}</span>`;
+            if(useReadingMode) qHtml += `<br><span style="font-size:18px; color:#e67e22;">(${correctObj.read})</span>`;
+            result.push({
+                q: qHtml,
+                options: options,
+                answer: options.indexOf(correctObj.th),
+                note: `<b>${correctObj.en}</b> (${correctObj.read}) = ${correctObj.th}`,
+                cat: "vocab"
+            });
+        }
+        return result;
+    }
+
     function startRandomQuiz() {
-        currentQuizList = questionBank.sort(() => 0.5 - Math.random()).slice(0, 15);
+        // Mixed: 20 Questions (15 general + 5 vocab)
+        const mixed = questionBank.sort(() => 0.5 - Math.random()).slice(0, 15);
+        const vocabs = generateVocabQuestions(5, false);
+        currentQuizList = [...mixed, ...vocabs].sort(() => 0.5 - Math.random());
+        initQuizState();
+        document.getElementById('subQuestionText').style.display = 'none';
+    }
+
+    function startVocabGame() {
+        // Vocab Only: 20 Questions
+        currentQuizList = generateVocabQuestions(20, true);
+        initQuizState();
+        document.getElementById('subQuestionText').style.display = 'block';
+    }
+
+    function initQuizState() {
         currentIdx = 0;
         score = 0;
+        userAnswers = new Array(currentQuizList.length).fill(null); // Reset answers
         showScreen('quizScreen');
         loadQuestion();
     }
 
+    // --- Core Quiz Logic (With State Tracking) ---
     function loadQuestion() {
-        canAnswer = true;
         const q = currentQuizList[currentIdx];
         
+        // UI Updates
         document.getElementById('qCounter').innerText = `${currentIdx + 1}/${currentQuizList.length}`;
         document.getElementById('qCategoryTag').innerText = `หมวด: ${q.cat.toUpperCase()}`;
         document.getElementById('questionText').innerHTML = q.q;
-        document.getElementById('progressFill').style.width = ((currentIdx / currentQuizList.length) * 100) + "%";
+        document.getElementById('progressFill').style.width = (((currentIdx + 1) / currentQuizList.length) * 100) + "%";
         
-        document.getElementById('feedback').classList.remove('show');
-        document.getElementById('nextBtn').style.display = 'none';
-
+        // Buttons State
+        document.getElementById('prevBtn').style.display = currentIdx > 0 ? 'block' : 'none';
+        
         const list = document.getElementById('optionsList');
         list.innerHTML = '';
         
+        // Check if already answered
+        const answeredIndex = userAnswers[currentIdx];
+        const isAnswered = answeredIndex !== null;
+
         q.options.forEach((opt, index) => {
             const btn = document.createElement('div');
             btn.className = 'option-btn';
             btn.innerHTML = opt;
-            btn.onclick = () => checkAnswer(index, btn);
+            
+            if (isAnswered) {
+                // Restore state
+                if (index === q.answer) btn.classList.add('correct');
+                if (index === answeredIndex && index !== q.answer) btn.classList.add('wrong');
+                btn.classList.add('disabled');
+            } else {
+                btn.onclick = () => checkAnswer(index, btn);
+            }
             list.appendChild(btn);
         });
+
+        // Feedback Logic
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (isAnswered) {
+            // Show feedback immediately if revisited
+            const isCorrect = answeredIndex === q.answer;
+            feedback.innerHTML = isCorrect 
+                ? `<span style='color:#155724; font-weight:bold;'>✅ ถูกต้อง!</span><br>${q.note}`
+                : `<span style='color:#721c24; font-weight:bold;'>❌ ผิด! เฉลย: ${q.options[q.answer]}</span><br>${q.note}`;
+            feedback.className = 'feedback show';
+            nextBtn.style.display = 'block';
+        } else {
+            feedback.className = 'feedback';
+            nextBtn.style.display = 'none';
+        }
     }
 
     function checkAnswer(selectedIndex, btnElement) {
-        if (!canAnswer) return;
-        canAnswer = false;
         playClick();
-
+        
+        // Save Answer
+        userAnswers[currentIdx] = selectedIndex;
+        
         const q = currentQuizList[currentIdx];
         const feedback = document.getElementById('feedback');
         const allBtns = document.querySelectorAll('.option-btn');
+
+        // Disable all buttons
+        allBtns.forEach(b => b.classList.add('disabled'));
 
         if (selectedIndex === q.answer) {
             score++;
             btnElement.classList.add('correct');
             feedback.innerHTML = `<span style='color:#155724; font-weight:bold;'>✅ ถูกต้อง!</span><br>${q.note}`;
         } else {
-            // บันทึกสถิติเมื่อตอบผิด
             userStats[q.cat]++;
             userStats.totalWrong++;
             saveStats();
-            
             btnElement.classList.add('wrong');
             allBtns[q.answer].classList.add('correct');
-            feedback.innerHTML = `<span style='color:#721c24; font-weight:bold;'>❌ ผิด! ตอบ: ${q.options[q.answer]}</span><br>${q.note}`;
+            feedback.innerHTML = `<span style='color:#721c24; font-weight:bold;'>❌ ผิด!</span><br>${q.note}`;
         }
         feedback.classList.add('show');
-        
-        // แสดงปุ่มถัดไป
         document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function prevQuestion() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            loadQuestion();
+        }
     }
 
     function nextQuestion() {
@@ -566,7 +781,37 @@
         showScreen('resultScreen');
         document.getElementById('finalScore').innerText = `${score}/${currentQuizList.length}`;
         const pct = (score / currentQuizList.length) * 100;
-        document.getElementById('resultTitle').innerText = pct >= 80 ? "สุดยอด!" : pct >= 50 ? "ผ่านเกณฑ์" : "สู้ต่อไป!";
+        document.getElementById('resultTitle').innerText = pct >= 80 ? "สุดยอด! พร้อมสอบ" : pct >= 50 ? "ผ่านเกณฑ์" : "สู้ต่อไป!";
+    }
+
+    function analyzeWeakness() {
+        showScreen('analysisScreen');
+        const container = document.getElementById('statContainer');
+        const recArea = document.getElementById('recommendationArea');
+        const labels = { 'grammar':'Grammar', 'vocab':'คำศัพท์', 'convo':'สนทนา', 'tricks':'สูตรจำ' };
+        
+        if (userStats.totalWrong === 0) {
+            container.innerHTML = "<p style='text-align:center; color:#999;'>ยังไม่มีข้อมูลการสอบ</p>";
+            recArea.style.display = 'none';
+            return;
+        }
+        
+        let maxWrong = -1;
+        let weakKey = "";
+        let html = "";
+        
+        Object.keys(labels).forEach(key => {
+            const count = userStats[key];
+            if(count > 0) html += `<div class="stat-row"><span>${labels[key]}</span><span class="stat-bad">ผิด ${count} ครั้ง</span></div>`;
+            if(count > maxWrong) { maxWrong = count; weakKey = key; }
+        });
+        container.innerHTML = html;
+
+        if (maxWrong > 0) {
+            recArea.style.display = 'block';
+            document.getElementById('weakPointName').innerText = labels[weakKey];
+            document.getElementById('goToLessonBtn').onclick = () => { playClick(); showLesson('lesson-' + weakKey); };
+        }
     }
 
     showScreen('mainMenu');
