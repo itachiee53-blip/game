@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Police Exam Master: ติวสอบนายสิบตำรวจ (Ultimate)</title>
+    <title>Police Exam Master: ติวสอบนายสิบตำรวจ (Ultimate Plus)</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -101,7 +101,7 @@
         .vocab-read { font-size: 12px; color: #666; font-style: italic; display: block; margin-top: 1px; }
         .vocab-mean { text-align: right; font-weight: 500; }
 
-        /* Cheat Sheet Table (New) */
+        /* Cheat Sheet Table */
         .cheat-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 15px; background: #fff; border:1px solid #ddd; }
         .cheat-table th { background: var(--primary-light); color: white; padding: 10px; text-align: left; }
         .cheat-table td { border-bottom: 1px solid #eee; padding: 10px; vertical-align: top; }
@@ -132,8 +132,8 @@
 
 <div class="app-container">
     <div class="header">
-        <h1>👮 Police Exam Master: Ultimate</h1>
-        <p>ครบเครื่อง! 100+ ข้อ | ศัพท์ 120 คำ | สูตรลัด</p>
+        <h1>👮 Police Exam Master: Ultimate Plus</h1>
+        <p>อัปเกรด! 200+ ศัพท์ | 60+ ข้อสอบจริง</p>
     </div>
 
     <div class="content-area">
@@ -177,7 +177,7 @@
             <div class="grid-menu">
                 <div class="menu-card" onclick="playClick(); showLesson('lesson-vocab')">
                     <span class="icon">🗣️</span>
-                    <span class="title">ศัพท์ 120 คำ (อ่าน+แปล)</span>
+                    <span class="title">ศัพท์ 160 คำ (อ่าน+แปล)</span>
                 </div>
                 <div class="menu-card" onclick="playClick(); showLesson('lesson-grammar')">
                     <span class="icon">⏳</span>
@@ -274,28 +274,12 @@
                                 🏙️ เมืองใหญ่: In Bangkok, In Thailand
                             </td>
                         </tr>
-                        <tr>
-                            <td><span class="cheat-v2">With</span></td>
-                            <td>กับ / ด้วย</td>
-                            <td>
-                                🤝 ไปกับคน: Go with my friend<br>
-                                🛠️ ใช้อุปกรณ์: Write with a pen
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="cheat-v2">Of</span></td>
-                            <td>ของ / แห่ง</td>
-                            <td>
-                                🔗 แสดงเจ้าของ: King of Thailand<br>
-                                ☕ บอกหมวดหมู่: Cup of coffee
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
 
             <div id="lesson-vocab" class="lesson-detail" style="display:none;">
-                <h3 style="border-bottom:2px solid var(--accent); padding-bottom:5px;">🛑 คลังศัพท์ตำรวจ (120 คำ)</h3>
+                <h3 style="border-bottom:2px solid var(--accent); padding-bottom:5px;">🛑 คลังศัพท์ตำรวจ (160+ คำ)</h3>
                 <input type="text" id="vocabSearch" placeholder="🔍 พิมพ์ค้นหาคำศัพท์..." style="width:90%; padding:8px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;" onkeyup="filterVocab()">
                 <table class="vocab-table">
                     <tbody id="vocabTableBody"></tbody>
@@ -411,11 +395,12 @@
         audio.play().catch(e => {});
     }
 
-    // --- 1. Question Bank (100+ Questions) ---
+    // --- 1. Question Bank (Expanded to 60+ Questions) ---
     const questionBank = [
         // --- Tenses & Verb Forms ---
         { q: "If it rains tomorrow, I ______ at home.", options: ["stay", "will stay", "stayed", "would stay"], answer: 1, note: "If-Clause Type 1: If + V.1, will + V.1", cat: "grammar" },
         { q: "If I ______ a bird, I would fly.", options: ["was", "am", "were", "been"], answer: 2, note: "If-Clause Type 2: สมมติ ใช้ were กับทุกประธาน", cat: "grammar" },
+        { q: "If he had driven carefully, he ______ an accident.", options: ["would have", "will not have", "wouldn't have had", "has not"], answer: 2, note: "If-Clause Type 3: If + had V.3, ... would have V.3", cat: "grammar" },
         { q: "The thief ______ by the police yesterday.", options: ["arrests", "was arrested", "is arrested", "arrested"], answer: 1, note: "Passive Voice + Past (yesterday): was + V.3", cat: "grammar" },
         { q: "Look! The bus ______.", options: ["come", "comes", "is coming", "came"], answer: 2, note: "Look! = กำลังเกิด (is coming)", cat: "grammar" },
         { q: "He ______ to the station an hour ago.", options: ["go", "goes", "went", "gone"], answer: 2, note: "Ago = อดีต (V.2 went)", cat: "grammar" },
@@ -425,59 +410,75 @@
         { q: "She usually ______ to school by bus.", options: ["go", "goes", "going", "went"], answer: 1, note: "Usually = กิจวัตร (Present Sim) ประธาน She กริยาเติม es", cat: "grammar" },
         { q: "They ______ football right now.", options: ["play", "plays", "are playing", "played"], answer: 2, note: "Right now = กำลังทำ", cat: "grammar" },
         { q: "Yesterday, I ______ a loud noise.", options: ["hear", "hears", "heard", "hearing"], answer: 2, note: "Yesterday = อดีต (V.2 heard)", cat: "grammar" },
-        
+        { q: "By the time the police arrived, the thief ______.", options: ["escapes", "escaped", "has escaped", "had escaped"], answer: 3, note: "Past Perfect: เกิดก่อนใช ้had V.3, เกิดทีหลังใช้ V.2", cat: "grammar" },
+        { q: "I ______ to Thailand next month.", options: ["travel", "travelled", "am travelling", "have travelled"], answer: 2, note: "V.ing ใช้กับอนาคตที่วางแผนไว้แล้วได้", cat: "grammar" },
+
         // --- Subject-Verb Agreement & Prepositions ---
         { q: "Everyone ______ to be happy.", options: ["want", "wants", "wanting", "wanted"], answer: 1, note: "Everyone เป็นเอกพจน์ กริยาเติม s", cat: "grammar" },
         { q: "One of the boys ______ sick.", options: ["is", "are", "were", "have"], answer: 0, note: "One of... (หนึ่งใน) ประธานคือ One ใช้ is", cat: "grammar" },
+        { q: "Neither the teacher nor the students ______ here.", options: ["is", "are", "was", "has"], answer: 1, note: "Neither...nor ผันตามประธานตัวหลัง (students = are)", cat: "grammar" },
+        { q: "A lot of money ______ stolen.", options: ["was", "were", "are", "have"], answer: 0, note: "Money นับไม่ได้ ถือเป็นเอกพจน์ (was)", cat: "grammar" },
         { q: "He is good ______ English.", options: ["in", "on", "at", "by"], answer: 2, note: "Good at = เก่งในเรื่อง...", cat: "grammar" },
         { q: "I was born ______ July.", options: ["in", "on", "at", "of"], answer: 0, note: "In + เดือน/ปี", cat: "grammar" },
         { q: "See you ______ Monday.", options: ["in", "on", "at", "by"], answer: 1, note: "On + วัน", cat: "grammar" },
+        { q: "The meeting starts ______ 9:00 AM.", options: ["in", "on", "at", "during"], answer: 2, note: "At + เวลาเป๊ะๆ", cat: "grammar" },
         { q: "There isn't ______ water left.", options: ["many", "some", "much", "few"], answer: 2, note: "Water นับไม่ได้ + ปฏิเสธ ใช้ Much", cat: "grammar" },
         { q: "Do you have ______ money?", options: ["some", "any", "many", "few"], answer: 1, note: "คำถามใช้ Any", cat: "grammar" },
         { q: "______ car is this?", options: ["Who", "Whose", "Whom", "Who's"], answer: 1, note: "Whose = ของใคร", cat: "grammar" },
         { q: "The book is ______ the table.", options: ["in", "on", "at", "to"], answer: 1, note: "On the table = บนโต๊ะ", cat: "grammar" },
         { q: "The police station is ______ the bank.", options: ["next", "near to", "next to", "between"], answer: 2, note: "Next to = ติดกับ/ถัดจาก", cat: "grammar" },
+        { q: "The man ______ stole the car was arrested.", options: ["who", "whom", "whose", "which"], answer: 0, note: "Who ขยายคน (เป็นประธานของประโยคย่อย)", cat: "grammar" },
         
         // --- Conjunctions & Connectors ---
         { q: "He didn't go to work ______ he was sick.", options: ["because", "because of", "although", "but"], answer: 0, note: "Because + ประโยค (he was sick)", cat: "grammar" },
         { q: "______ the rain, we stayed home.", options: ["Because", "Because of", "Although", "However"], answer: 1, note: "Because of + คำนาม (the rain)", cat: "grammar" },
         { q: "______ it was raining, he went out.", options: ["Because", "Due to", "Although", "Despite"], answer: 2, note: "Although = แม้ว่า (ขัดแย้ง)", cat: "grammar" },
+        { q: "He studied hard, ______ he failed the exam.", options: ["so", "but", "and", "or"], answer: 1, note: "But เชื่อมความขัดแย้ง", cat: "grammar" },
         
         // --- Vocab & Tricks ---
         { q: "We avoided ______ him.", options: ["meet", "to meet", "meeting", "met"], answer: 2, note: "Avoid + V.ing", cat: "tricks" },
         { q: "She enjoys ______ books.", options: ["read", "reading", "to read", "reads"], answer: 1, note: "Enjoy + V.ing", cat: "tricks" },
-        { q: "You ______ stop when the light is red.", options: ["can", "may", "must", "should"], answer: 2, note: "Must = ต้อง (กฎหมาย)", cat: "grammar" },
+        { q: "You ______ stop when the light is red.", options: ["can", "may", "must", "should"], answer: 2, note: "Must = ต้อง (กฎหมายบังคับ)", cat: "grammar" },
+        { q: "You ______ smoke in the hospital.", options: ["must", "mustn't", "don't have to", "should"], answer: 1, note: "Mustn't = ห้ามเด็ดขาด", cat: "grammar" },
         { q: "I stop ______ cigarette.", options: ["smoking", "to smoke", "smokes", "smoke"], answer: 0, note: "Stop + ing = เลิกทำสิ่งนั้นถาวร", cat: "tricks" },
         { q: "He made me ______.", options: ["to cry", "crying", "cry", "cried"], answer: 2, note: "Make someone + V.pure (ไม่มี to)", cat: "tricks" },
-
+        { q: "Would you mind ______ the window?", options: ["open", "to open", "opening", "opened"], answer: 2, note: "Would you mind + V.ing", cat: "tricks" },
+        
         // --- Reading Signs & Notices ---
         { q: "Sign: <b>NO ENTRY</b>", options: ["You can enter.", "Do not enter.", "Park here.", "Exit only."], answer: 1, note: "No Entry = ห้ามเข้า", cat: "grammar" },
-        { q: "Sign: <b>OUT OF ORDER</b>", options: ["Working.", "Broken.", "Open.", "New."], answer: 1, note: "Out of order = เสีย", cat: "grammar" },
+        { q: "Sign: <b>OUT OF ORDER</b>", options: ["Working.", "Broken.", "Open.", "New."], answer: 1, note: "Out of order = เสีย/ใช้การไม่ได้", cat: "grammar" },
         { q: "Sign: <b>NO PARKING</b>", options: ["Park here.", "Do not park.", "Free parking.", "Parking lot."], answer: 1, note: "No Parking = ห้ามจอด", cat: "grammar" },
         { q: "Notice: <b>WET PAINT</b>", options: ["Touch it.", "Do not touch.", "Paint it.", "Dry paint."], answer: 1, note: "Wet Paint = สีเพิ่งทา (ยังไม่แห้ง)", cat: "grammar" },
+        { q: "Sign: <b>BEWARE OF DOG</b>", options: ["Feed the dog.", "The dog is dangerous.", "Buy a dog.", "Play with the dog."], answer: 1, note: "Beware = ระวัง", cat: "grammar" },
+        { q: "Sign: <b>SPEED LIMIT 80</b>", options: ["Drive faster than 80.", "Drive exactly 80.", "Do not drive over 80.", "Stop at 80."], answer: 2, note: "Speed Limit = จำกัดความเร็ว", cat: "grammar" },
         
         // --- Conversation (Police Situations) ---
         { q: "A: Thank you very much. <br> B: ______", options: ["Never mind.", "You're welcome.", "I'm sorry.", "Good luck."], answer: 1, note: "ตอบรับขอบคุณ = You're welcome", cat: "convo" },
-        { q: "A: I'm sorry I'm late. <br> B: ______", options: ["Good idea.", "Never mind.", "Yes, please.", "Thank you."], answer: 1, note: "ตอบรับขอโทษ = Never mind", cat: "convo" },
+        { q: "A: I'm sorry I'm late. <br> B: ______", options: ["Good idea.", "Never mind.", "Yes, please.", "Thank you."], answer: 1, note: "ตอบรับขอโทษ = Never mind (ไม่เป็นไร)", cat: "convo" },
         { q: "Tourist: Excuse me, where is the police station? <br> You: ______", options: ["Yes, I am.", "Go straight and turn left.", "I want to go.", "It is big."], answer: 1, note: "บอกทาง: Go straight...", cat: "convo" },
         { q: "Officer: May I see your license? <br> Driver: ______", options: ["No, thank you.", "Here you are.", "Yes, I do.", "I am driving."], answer: 1, note: "ยื่นของให้พูด Here you are", cat: "convo" },
-        { q: "Do you mind if I open the window?", options: ["Yes, I do.", "No, not at all.", "Thank you.", "I am sorry."], answer: 1, note: "อนุญาตให้ตอบ No, not at all", cat: "convo" },
+        { q: "Do you mind if I open the window?", options: ["Yes, I do.", "No, not at all.", "Thank you.", "I am sorry."], answer: 1, note: "อนุญาตให้ตอบ No, not at all (ไม่รังเกียจเลย)", cat: "convo" },
         { q: "Victim: Help! My bag was stolen. <br> Police: ______", options: ["You are welcome.", "Calm down, please tell me what happened.", "Go away.", "It is yours."], answer: 1, note: "ตำรวจต้องบอกให้ใจเย็นและเล่าเหตุการณ์", cat: "convo" },
         { q: "Driver: I was driving too fast. I'm sorry. <br> Officer: ______", options: ["Good job.", "I have to give you a ticket.", "Don't worry.", "Go home."], answer: 1, note: "ขับรถเร็ว = ต้องออกใบสั่ง (Ticket)", cat: "convo" },
+        { q: "Police: Do you know why I stopped you? <br> Driver: ______", options: ["Yes, I am fine.", "I have no idea, officer.", "Good morning.", "I am hungry."], answer: 1, note: "I have no idea = ไม่ทราบครับ", cat: "convo" },
         
         // --- More General Exam Items ---
         { q: "Which word means 'Start'?", options: ["End", "Finish", "Begin", "Stop"], answer: 2, note: "Begin = Start (เริ่ม)", cat: "vocab" },
         { q: "Which word is OPPOSITE to 'Dangerous'?", options: ["Safe", "Scary", "Risk", "Bad"], answer: 0, note: "Safe (ปลอดภัย) ตรงข้าม Dangerous", cat: "vocab" },
+        { q: "Which word is OPPOSITE to 'Guilty'?", options: ["Bad", "Innocent", "Wrong", "Prisoner"], answer: 1, note: "Innocent (บริสุทธิ์) ตรงข้าม Guilty", cat: "vocab" },
         { q: "My car ______ down yesterday.", options: ["break", "broke", "broken", "breaking"], answer: 1, note: "Break down = เสีย (อดีตใช้ Broke)", cat: "grammar" },
         { q: "The suspect is under ______.", options: ["arrest", "home", "school", "hospital"], answer: 0, note: "Under arrest = ถูกจับกุม", cat: "vocab" },
         { q: "Please ______ your seatbelt.", options: ["take off", "fasten", "open", "close"], answer: 1, note: "Fasten seatbelt = คาดเข็มขัด", cat: "vocab" },
         { q: "He was charged ______ murder.", options: ["of", "with", "at", "for"], answer: 1, note: "Charged with = ถูกตั้งข้อหา...", cat: "grammar" },
         { q: "The police are ______ the case.", options: ["looking", "investigating", "inventing", "inviting"], answer: 1, note: "Investigating = สืบสวน", cat: "vocab" },
-        { q: "You must pay a ______ for parking here.", options: ["price", "fine", "cost", "bill"], answer: 1, note: "Fine = ค่าปรับ", cat: "vocab" }
+        { q: "You must pay a ______ for parking here.", options: ["price", "fine", "cost", "bill"], answer: 1, note: "Fine = ค่าปรับ", cat: "vocab" },
+        { q: "The firemen put ______ the fire.", options: ["on", "out", "in", "off"], answer: 1, note: "Put out = ดับไฟ", cat: "tricks" },
+        { q: "He ran ______ of money.", options: ["out", "in", "away", "off"], answer: 0, note: "Run out of = หมด/ขาดแคลน", cat: "tricks" }
     ];
 
-    // --- 2. Vocab Database (120 Words) ---
+    // --- 2. Vocab Database (Expanded to 160+ Words) ---
     const vocabData = [
+        // หมวดกฎหมายและคดี
         { en: "Arrest", read: "อะ-เรสท์", th: "จับกุม" },
         { en: "Warrant", read: "วอร์-แรนท์", th: "หมายจับ/ค้น" },
         { en: "Suspect", read: "ซัส-เปคท์", th: "ผู้ต้องสงสัย" },
@@ -488,16 +489,6 @@
         { en: "Interrogate", read: "อิน-เทอ-โร-เกท", th: "สอบปากคำ" },
         { en: "Custody", read: "คัส-โต-ดี้", th: "การคุมขัง" },
         { en: "Handcuffs", read: "แฮนด์-คัฟส์", th: "กุญแจมือ" },
-        { en: "Patrol", read: "พะ-โทรล", th: "ลาดตระเวน" },
-        { en: "Officer", read: "ออฟ-ฟิ-เซอร์", th: "เจ้าหน้าที่" },
-        { en: "Sergeant", read: "ซาร์-เจินท์", th: "จ่า/นายสิบ" },
-        { en: "Commander", read: "คอม-แมน-เดอร์", th: "ผู้บังคับบัญชา" },
-        { en: "Station", read: "สเต-ชั่น", th: "สถานี" },
-        { en: "Crime", read: "ไครม์", th: "อาชญากรรม" },
-        { en: "Scene", read: "ซีน", th: "ที่เกิดเหตุ" },
-        { en: "Fingerprint", read: "ฟิง-เกอร์-พรินท์", th: "ลายนิ้วมือ" },
-        { en: "Weapon", read: "เวพ-พ่อน", th: "อาวุธ" },
-        { en: "Gunshot", read: "กัน-ช็อต", th: "รอยกระสุน" },
         { en: "Court", read: "คอร์ท", th: "ศาล" },
         { en: "Judge", read: "จัดจ์", th: "ผู้พิพากษา" },
         { en: "Lawyer", read: "ลอ-เย่อร์", th: "ทนายความ" },
@@ -518,24 +509,21 @@
         { en: "Rights", read: "ไรทส์", th: "สิทธิ" },
         { en: "Confess", read: "คอน-เฟส", th: "สารภาพ" },
         { en: "Deny", read: "ดิ-นาย", th: "ปฏิเสธ" },
-        { en: "Essential", read: "เอส-เซน-เชี่ยล", th: "จำเป็น" },
-        { en: "Deficiency", read: "ดิ-ฟิ-เชี่ยน-ซี่", th: "ขาดแคลน" },
-        { en: "Amass", read: "อะ-แมส", th: "สะสม" },
-        { en: "Abundant", read: "อะ-บัน-แดนท์", th: "มากมาย" },
-        { en: "Emergency", read: "อี-เมอ-เจน-ซี่", th: "ฉุกเฉิน" },
-        { en: "Urgent", read: "เออ-เจ้นท์", th: "เร่งด่วน" },
-        { en: "Accident", read: "แอค-ซิ-เดนท์", th: "อุบัติเหตุ" },
-        { en: "Injure", read: "อิน-เจ้อ", th: "บาดเจ็บ" },
-        { en: "Traffic", read: "แทรฟ-ฟิค", th: "จราจร" },
-        { en: "Ticket", read: "ทิค-เก็ต", th: "ใบสั่ง" },
-        { en: "License", read: "ไล-เซ่นส์", th: "ใบอนุญาต" },
-        { en: "Identify", read: "ไอ-เดน-ทิ-ฟาย", th: "ระบุตัวตน" },
-        { en: "Search", read: "เซิร์ช", th: "ค้นหา" },
-        { en: "Seize", read: "ซีซ", th: "ยึด/อายัด" },
-        { en: "Smuggle", read: "สมัก-เกิ้ล", th: "ลักลอบ" },
-        { en: "Drug", read: "ดรัก", th: "ยาเสพติด" },
+        { en: "Testify", read: "เทส-ทิ-ฟาย", th: "ให้การเป็นพยาน" },
+        { en: "Oath", read: "โอธ", th: "คำสาบาน" },
+        { en: "Penalty", read: "เพน-นัล-ตี้", th: "การลงโทษ" },
+        { en: "Probation", read: "โปร-เบ-ชั่น", th: "การคุมประพฤติ" },
+        { en: "Parole", read: "พะ-โรล", th: "ทัณฑ์บน" },
+        { en: "Extradition", read: "เอ็กซ์-ตรา-ดิ-ชั่น", th: "การส่งผู้ร้ายข้ามแดน" },
+        { en: "Allegation", read: "อัล-เล-เก-ชั่น", th: "ข้อกล่าวหา" },
+        { en: "Accomplice", read: "อะ-คอม-พลิซ", th: "ผู้สมรู้ร่วมคิด" },
+        { en: "Alibi", read: "แอ-ลิ-บาย", th: "ถิ่นที่อยู่(ข้ออ้าง)" },
+
+        // หมวดอาชญากรรม
+        { en: "Crime", read: "ไครม์", th: "อาชญากรรม" },
         { en: "Theft", read: "เธฟท์", th: "การขโมย" },
         { en: "Robbery", read: "ร็อบ-เบอ-รี่", th: "การปล้น" },
+        { en: "Burglary", read: "เบอร์-กลา-รี่", th: "ย่างเบา/งัดแงะ" },
         { en: "Murder", read: "เมอ-เดอร์", th: "ฆาตกรรม" },
         { en: "Assault", read: "อะ-ซอลท์", th: "ทำร้ายร่างกาย" },
         { en: "Fraud", read: "ฟรอด", th: "ฉ้อโกง" },
@@ -544,31 +532,66 @@
         { en: "Kidnap", read: "คิด-แนป", th: "ลักพาตัว" },
         { en: "Hostage", read: "ฮอส-เทจ", th: "ตัวประกัน" },
         { en: "Arson", read: "อาร์-ซั่น", th: "ลอบวางเพลิง" },
-        { en: "Burglary", read: "เบอร์-กลา-รี่", th: "ย่างเบา/งัดแงะ" },
-        { en: "Accomplice", read: "อะ-คอม-พลิซ", th: "ผู้สมรู้ร่วมคิด" },
-        { en: "Alibi", read: "แอ-ลิ-บาย", th: "ถิ่นที่อยู่(ข้ออ้าง)" },
-        { en: "Autopsy", read: "ออ-ท็อป-ซี่", th: "ชันสูตรศพ" },
-        { en: "Forensic", read: "ฟอ-เรน-ซิก", th: "นิติเวช" },
-        { en: "Testify", read: "เทส-ทิ-ฟาย", th: "ให้การเป็นพยาน" },
-        { en: "Oath", read: "โอธ", th: "คำสาบาน" },
-        { en: "Penalty", read: "เพน-นัล-ตี้", th: "การลงโทษ" },
-        { en: "Probation", read: "โปร-เบ-ชั่น", th: "การคุมประพฤติ" },
-        { en: "Parole", read: "พะ-โรล", th: "ทัณฑ์บน" },
-        { en: "Immigration", read: "อิม-มิ-เกร-ชั่น", th: "การตรวจคนเข้าเมือง" },
-        { en: "Border", read: "บอร์-เดอร์", th: "ชายแดน" },
-        { en: "Checkpoint", read: "เช็ค-พอยท์", th: "ด่านตรวจ" },
+        { en: "Smuggle", read: "สมัก-เกิ้ล", th: "ลักลอบนำเข้า" },
+        { en: "Drug", read: "ดรัก", th: "ยาเสพติด" },
         { en: "Narcotics", read: "นาร์-คอ-ติกส์", th: "ยาเสพติด(ทางการ)" },
         { en: "Trafficking", read: "แทรฟ-ฟิก-กิ้ง", th: "การค้ามนุษย์/ยา" },
+        { en: "Homicide", read: "ฮอ-มิ-ไซด์", th: "ฆาตกรรม" },
+        { en: "Blackmail", read: "แบล็ค-เมล", th: "ขู่กรรโชก" },
+        { en: "Vandalism", read: "แวน-ดา-ลิ-ซึ่ม", th: "การทำลายทรัพย์สิน" },
+        { en: "Domestic Violence", read: "โด-เมส-ติก ไว-โอ-เลนซ์", th: "ความรุนแรงในครอบครัว" },
+        { en: "Terrorism", read: "เทอ-เรอ-ริ-ซึ่ม", th: "การก่อการร้าย" },
+        { en: "Riot", read: "ไร-ออท", th: "การจลาจล" },
+
+        // หมวดปฏิบัติการและอุปกรณ์
+        { en: "Patrol", read: "พะ-โทรล", th: "ลาดตระเวน" },
+        { en: "Checkpoint", read: "เช็ค-พอยท์", th: "ด่านตรวจ" },
         { en: "Raid", read: "เรด", th: "การจู่โจม/บุกค้น" },
+        { en: "Search", read: "เซิร์ช", th: "ค้นหา" },
+        { en: "Seize", read: "ซีซ", th: "ยึด/อายัด" },
+        { en: "Surveillance", read: "เซอร์-เว-แลนซ์", th: "การเฝ้าระวัง/สอดแนม" },
+        { en: "Ambush", read: "แอม-บุช", th: "ซุ่มโจมตี" },
         { en: "Squad", read: "สควอด", th: "หมู่/หน่วย" },
-        { en: "Uniform", read: "ยู-นิ-ฟอร์ม", th: "เครื่องแบบ" },
-        { en: "Badge", read: "แบดจ์", th: "ตราเจ้าหน้าที่" },
+        { en: "Reinforcement", read: "รี-อิน-ฟอร์ซ-เม้นท์", th: "กำลังเสริม" },
+        { en: "Fingerprint", read: "ฟิง-เกอร์-พรินท์", th: "ลายนิ้วมือ" },
+        { en: "Weapon", read: "เวพ-พ่อน", th: "อาวุธ" },
         { en: "Pistol", read: "พิส-ทอล", th: "ปืนพก" },
         { en: "Bullet", read: "บุล-เล็ท", th: "กระสุน" },
-        { en: "Helmet", read: "เฮล-เม็ท", th: "หมวกกันน็อค" },
+        { en: "Baton", read: "แบ-ทอน", th: "กระบอง" },
+        { en: "Shield", read: "ชีลด์", th: "โล่" },
+        { en: "Bulletproof vest", read: "บุล-เล็ท-พรูฟ เวสท์", th: "เสื้อกันกระสุน" },
+        { en: "Uniform", read: "ยู-นิ-ฟอร์ม", th: "เครื่องแบบ" },
+        { en: "Badge", read: "แบดจ์", th: "ตราเจ้าหน้าที่" },
+        { en: "Siren", read: "ไซ-เรน", th: "ไซเรน" },
+        { en: "Whistle", read: "วิส-เซิ่ล", th: "นกหวีด" },
+        { en: "Flashlight", read: "แฟลช-ไลท์", th: "ไฟฉาย" },
+        { en: "Radio", read: "เร-ดิ-โอ", th: "วิทยุสื่อสาร" },
         { en: "Vehicle", read: "วี-ฮิ-เคิล", th: "ยานพาหนะ" },
-        { en: "Ambulance", read: "แอม-บู-แลนซ์", th: "รถพยาบาล" },
+        { en: "Scene", read: "ซีน", th: "ที่เกิดเหตุ" },
+        { en: "Autopsy", read: "ออ-ท็อป-ซี่", th: "ชันสูตรศพ" },
+        { en: "Forensic", read: "ฟอ-เรน-ซิก", th: "นิติเวช" },
+        { en: "Coroner", read: "คอ-โร-เนอร์", th: "เจ้าหน้าที่ชันสูตร" },
+
+        // หมวดทั่วไปและคำศัพท์ข้อสอบ
+        { en: "Emergency", read: "อี-เมอ-เจน-ซี่", th: "ฉุกเฉิน" },
+        { en: "Urgent", read: "เออ-เจ้นท์", th: "เร่งด่วน" },
+        { en: "Accident", read: "แอค-ซิ-เดนท์", th: "อุบัติเหตุ" },
+        { en: "Injure", read: "อิน-เจ้อ", th: "บาดเจ็บ" },
+        { en: "Traffic", read: "แทรฟ-ฟิค", th: "จราจร" },
+        { en: "Ticket", read: "ทิค-เก็ต", th: "ใบสั่ง" },
+        { en: "License", read: "ไล-เซ่นส์", th: "ใบอนุญาต" },
+        { en: "Identity", read: "ไอ-เดน-ทิ-ตี้", th: "อัตลักษณ์/ตัวตน" },
+        { en: "Immigration", read: "อิม-มิ-เกร-ชั่น", th: "การตรวจคนเข้าเมือง" },
+        { en: "Border", read: "บอร์-เดอร์", th: "ชายแดน" },
+        { en: "Passport", read: "พาส-พอร์ต", th: "หนังสือเดินทาง" },
+        { en: "Visa", read: "วี-ซ่า", th: "วีซ่า" },
+        { en: "Foreigner", read: "ฟอ-เรน-เนอร์", th: "ชาวต่างชาติ" },
+        { en: "Embassy", read: "เอ็ม-บัส-ซี่", th: "สถานทูต" },
+        { en: "Civilian", read: "ซิ-วิล-เลี่ยน", th: "พลเรือน" },
+        { en: "Volunteer", read: "วอ-ลัน-เทียร์", th: "อาสาสมัคร" },
+        { en: "Evacuate", read: "อี-แวค-คู-เอท", th: "อพยพ" },
         { en: "Rescue", read: "เรส-คิว", th: "การกู้ภัย" },
+        { en: "Ambulance", read: "แอม-บู-แลนซ์", th: "รถพยาบาล" },
         { en: "Secure", read: "ซี-เคียว", th: "ปลอดภัย/แน่นหนา" },
         { en: "Protect", read: "โปร-เทคท์", th: "ปกป้อง" },
         { en: "Serve", read: "เสิร์ฟ", th: "รับใช้/บริการ" },
@@ -578,19 +601,30 @@
         { en: "Report", read: "รี-พอร์ต", th: "รายงาน" },
         { en: "Order", read: "ออ-เดอร์", th: "คำสั่ง" },
         { en: "Force", read: "ฟอร์ซ", th: "กำลังพล/บังคับ" },
-        { en: "Department", read: "ดิ-พาร์ท-เม้นท์", th: "แผนก/กรม" },
-        { en: "Civilian", read: "ซิ-วิล-เลี่ยน", th: "พลเรือน" },
-        { en: "Foreigner", read: "ฟอ-เรน-เนอร์", th: "ชาวต่างชาติ" },
-        { en: "Embassy", read: "เอ็ม-บัส-ซี่", th: "สถานทูต" },
-        { en: "Passport", read: "พาส-พอร์ต", th: "หนังสือเดินทาง" },
-        { en: "Visa", read: "วี-ซ่า", th: "วีซ่า" }
+        { en: "Authority", read: "ออ-ธอ-ริ-ตี้", th: "อำนาจหน้าที่" },
+        { en: "Protest", read: "โปร-เทสท์", th: "ประท้วง" },
+        { en: "Crowd", read: "คราวด์", th: "ฝูงชน" },
+        { en: "Curfew", read: "เคอร์-ฟิว", th: "เคอร์ฟิว" },
+        { en: "Violation", read: "ไว-โอ-เล-ชั่น", th: "การฝ่าฝืน" },
+        { en: "Illegal", read: "อิล-ลี-กัล", th: "ผิดกฎหมาย" },
+        { en: "Prohibit", read: "โปร-ฮิ-บิท", th: "ห้าม" },
+        { en: "Allow", read: "อะ-ลาว", th: "อนุญาต" },
+        { en: "Warning", read: "วอร์-นิ่ง", th: "คำเตือน" },
+        { en: "Dangerous", read: "เดน-เจ-อรัส", th: "อันตราย" },
+        { en: "Cautious", read: "คอ-เชียส", th: "ระมัดระวัง" },
+        { en: "Suspicious", read: "ซัส-พิ-เชียส", th: "น่าสงสัย" },
+        { en: "Identify", read: "ไอ-เดน-ทิ-ฟาย", th: "ระบุตัวตน" },
+        { en: "Essential", read: "เอส-เซน-เชี่ยล", th: "จำเป็น" },
+        { en: "Deficiency", read: "ดิ-ฟิ-เชี่ยน-ซี่", th: "ขาดแคลน" },
+        { en: "Amass", read: "อะ-แมส", th: "สะสม" },
+        { en: "Abundant", read: "อะ-บัน-แดนท์", th: "มากมาย" }
     ];
 
     // --- State & Storage ---
     let currentQuizList = [];
     let currentIdx = 0;
     let score = 0;
-    let userAnswers = []; // Store user answers: [null, 2, 0, 1, ...]
+    let userAnswers = [];
     let userStats = JSON.parse(localStorage.getItem('policeExamStats')) || { grammar:0, vocab:0, convo:0, tricks:0, totalWrong:0 };
 
     function saveStats() { localStorage.setItem('policeExamStats', JSON.stringify(userStats)); }
@@ -673,7 +707,7 @@
     function initQuizState() {
         currentIdx = 0;
         score = 0;
-        userAnswers = new Array(currentQuizList.length).fill(null); // Reset answers
+        userAnswers = new Array(currentQuizList.length).fill(null);
         showScreen('quizScreen');
         loadQuestion();
     }
@@ -694,7 +728,6 @@
         const list = document.getElementById('optionsList');
         list.innerHTML = '';
         
-        // Check if already answered
         const answeredIndex = userAnswers[currentIdx];
         const isAnswered = answeredIndex !== null;
 
@@ -704,7 +737,6 @@
             btn.innerHTML = opt;
             
             if (isAnswered) {
-                // Restore state
                 if (index === q.answer) btn.classList.add('correct');
                 if (index === answeredIndex && index !== q.answer) btn.classList.add('wrong');
                 btn.classList.add('disabled');
@@ -714,12 +746,10 @@
             list.appendChild(btn);
         });
 
-        // Feedback Logic
         const feedback = document.getElementById('feedback');
         const nextBtn = document.getElementById('nextBtn');
         
         if (isAnswered) {
-            // Show feedback immediately if revisited
             const isCorrect = answeredIndex === q.answer;
             feedback.innerHTML = isCorrect 
                 ? `<span style='color:#155724; font-weight:bold;'>✅ ถูกต้อง!</span><br>${q.note}`
@@ -734,15 +764,12 @@
 
     function checkAnswer(selectedIndex, btnElement) {
         playClick();
-        
-        // Save Answer
         userAnswers[currentIdx] = selectedIndex;
         
         const q = currentQuizList[currentIdx];
         const feedback = document.getElementById('feedback');
         const allBtns = document.querySelectorAll('.option-btn');
 
-        // Disable all buttons
         allBtns.forEach(b => b.classList.add('disabled'));
 
         if (selectedIndex === q.answer) {
