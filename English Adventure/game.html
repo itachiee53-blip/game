@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing Adventure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="start-overlay" class="overlay">
+        <div class="overlay-content">
+            <div class="start-icon">🗺️</div>
+            <h1>Are you ready?</h1>
+            <p>คุณพร้อมที่จะเริ่มผจญภัยหรือยัง?</p>
+            <button id="start-btn">▶ START ADVENTURE</button>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <button id="home-btn" class="home-btn">🏠 Home</button>
+
+        <div class="scene-icon-container">
+            <div id="scene-icon">🏝️</div>
+        </div>
+
+        <audio id="scene-audio" loop></audio>
+        <audio id="sfx-audio"></audio>
+
+        <div class="story-text-box">
+            <p id="story-text">Loading...</p>
+        </div>
+
+        <div class="choices-container" id="choices-area"></div>
+    </div>
+
+    <div id="translation-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>📜 Review & Translate</h2>
+            <div class="review-box">
+                <small>Situation:</small>
+                <div class="eng-text" id="m-story-en"></div>
+                <div class="phonetic" id="m-story-read"></div>
+                <div class="th-text" id="m-story-th"></div>
+            </div>
+            <div class="review-box" style="border-left: 4px solid #e94560;">
+                <small>Your Choice:</small>
+                <div class="eng-text" id="m-choice-en"></div>
+                <div class="phonetic" id="m-choice-read"></div>
+                <div class="th-text" id="m-choice-th"></div>
+            </div>
+            <button class="next-btn" id="modal-next-btn">Next Scene ➜</button>
+        </div>
+    </div>
+
+    <script src="stories.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
