@@ -1,0 +1,148 @@
+/* --- Global Styles --- */
+body {
+    background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}
+
+/* --- หน้าเมนู --- */
+.game-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffd700;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+.game-subtitle { font-size: 1.2rem; color: #aaa; margin-bottom: 40px; }
+
+.story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.story-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    border: 2px solid #334155;
+    border-radius: 15px;
+    padding: 25px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.2s ease-out; /* ทำให้ไวขึ้น */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.story-card:active { transform: scale(0.95); } /* กดแล้วยุบลงนิดนึงให้รู้สึกตอบสนอง */
+.card-icon { font-size: 4rem; margin-bottom: 15px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+.card-title { font-size: 1.5rem; font-weight: bold; color: #fff; margin-bottom: 10px; text-transform: uppercase; }
+.card-desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; }
+.play-tag { margin-top: 20px; background: #e94560; color: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
+
+/* --- หน้าเกม --- */
+.game-container {
+    background: rgba(22, 33, 62, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #334155;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.home-btn {
+    position: absolute;
+    top: 15px; left: 15px;
+    background: rgba(255, 255, 255, 0.1); color: #aaa;
+    text-decoration: none; padding: 5px 10px; border-radius: 5px;
+    font-size: 0.9rem; border: 1px solid #444; transition: all 0.2s;
+}
+.home-btn:hover { background: #e94560; color: white; border-color: #e94560; }
+
+.scene-icon-container {
+    width: 100%; height: 120px; /* ลดความสูงลงนิดนึง */
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; margin-top: 30px;
+    animation: float 3s ease-in-out infinite;
+}
+#scene-icon { font-size: 80px; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); }
+
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.story-text-box {
+    background: #2b2b3b; padding: 20px; border-radius: 10px; margin-bottom: 20px;
+    font-size: 1.1rem; line-height: 1.6; text-align: left; border-left: 4px solid #ffd700;
+}
+
+.choices-container { display: flex; flex-direction: column; gap: 10px; }
+.choice-btn {
+    background: #2c3e50; color: white; border: 1px solid #444;
+    padding: 15px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+    text-align: left; transition: transform 0.1s;
+}
+.choice-btn:active { transform: scale(0.98); background: #e94560; } /* กดแล้วยุบไวๆ */
+
+/* Start Screen */
+.overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95); display: flex; justify-content: center; align-items: center; z-index: 2000;
+}
+.overlay-content { text-align: center; color: white; }
+.start-icon { font-size: 5rem; margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
+.overlay-content h1 { color: #ffd700; font-size: 2rem; margin: 0; }
+.overlay-content p { font-size: 1rem; color: #aaa; margin-bottom: 20px; }
+#start-btn {
+    padding: 15px 40px; font-size: 1.2rem; background: linear-gradient(to right, #e94560, #c0392b);
+    color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
+    box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
+}
+#start-btn:active { transform: scale(0.95); }
+
+/* Modal */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: center;
+    z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.2s; /* ลดเวลาเฟด */
+}
+.modal.show { opacity: 1; pointer-events: all; }
+.modal-content {
+    background: #fff; color: #333; width: 85%; max-width: 500px;
+    padding: 25px; border-radius: 12px; text-align: left;
+    max-height: 80vh; overflow-y: auto; /* กันข้อความล้นจอ */
+}
+.modal-content h2 { color: #333; text-align: center; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 0; }
+.review-box { 
+    margin-bottom: 15px; background: #f9f9f9; padding: 10px; border-radius: 8px; 
+    word-wrap: break-word; /* ตัดคำยาวๆ ไม่ให้ล้น */
+}
+.eng-text { color: #0056b3; font-weight: bold; font-size: 1.1rem; }
+.phonetic { color: #666; font-style: italic; font-size: 0.95rem; margin-top: 5px; }
+.th-text { color: #333; margin-top: 5px; }
+.next-btn {
+    width: 100%; padding: 15px; background: #2ecc71; color: white;
+    border: none; border-radius: 8px; font-size: 1.2rem; cursor: pointer;
+}
+.hidden { display: none; }
